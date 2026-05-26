@@ -316,6 +316,11 @@ dialog::backdrop {
   gap: 0.9rem;
 }
 
+.risk-criteria {
+  font-size: 0.82rem;
+  margin-top: -0.2rem;
+}
+
 .manager-stats .card {
   border-style: dashed;
 }
@@ -350,6 +355,31 @@ th {
 
 tbody tr:nth-child(even) {
   background: #fffafb;
+}
+
+tbody tr.risk-row {
+  background: #fff1f3;
+}
+
+.risk-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.risk-pill.at-risk {
+  background: #fee2e7;
+  color: #8e1025;
+  border-color: #f7bbc6;
+}
+
+.risk-pill.on-track {
+  background: #f0f7f0;
+  color: #155724;
+  border-color: #bedec2;
 }
 
 .feedback {

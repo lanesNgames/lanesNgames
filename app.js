@@ -729,12 +729,15 @@ const elements = {
   managerLearners: document.getElementById("manager-learners"),
   managerCompletion: document.getElementById("manager-completion"),
   managerCompleted: document.getElementById("manager-completed"),
+  managerAtRisk: document.getElementById("manager-at-risk"),
   managerTableBody: document.getElementById("manager-table-body")
 };
 
 const storageKey = "copilot-lms-state";
 const learnerRecordsKey = "copilot-lms-learners";
 const PASS_THRESHOLD = 80;
+const QUIZ_RISK_THRESHOLD = 70;
+const STALE_DAYS_THRESHOLD = 7;
 
 const defaultState = {
   associateName: "",
@@ -1149,6 +1152,40 @@ function formatTimestamp(timestamp) {
   });
 }
 
+function getDaysSince(timestamp) {
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  const diffMs = Date.now() - date.getTime();
+  return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+}
+
+function evaluateLearnerRisk(record) {
+  const progress = Number.isFinite(record.progress) ? record.progress : 0;
+  const quizAverage = Number.isFinite(record.quizAverage) ? record.quizAverage : 0;
+  const daysSinceUpdate = getDaysSince(record.lastUpdated);
+  const reasons = [];
+
+  if (quizAverage < QUIZ_RISK_THRESHOLD) {
+    reasons.push(`Quiz average below ${QUIZ_RISK_THRESHOLD}%`);
+  }
+
+  if (
+    daysSinceUpdate !== null &&
+    progress < 100 &&
+    daysSinceUpdate >= STALE_DAYS_THRESHOLD
+  ) {
+    reasons.push(`No progress updates for ${daysSinceUpdate} days`);
+  }
+
+  return {
+    isAtRisk: reasons.length > 0,
+    reasons
+  };
+}
+
 function renderManagerDashboard() {
   const records = Object.values(learnerRecords)
     .filter((record) => Boolean(record))
@@ -1156,32 +1193,7 @@ function renderManagerDashboard() {
       String(b.lastUpdated || "").localeCompare(String(a.lastUpdated || ""))
     );
 
-  const totalLearners = records.length;
-  const avgCompletion = totalLearners
-    ? Math.round(
-      records.reduce((sum, record) => sum + record.progress, 0) / totalLearners
-    )
-    : 0;
-  const completedJourneys = records.filter((record) => record.progress === 100).length;
-
-  elements.managerLearners.textContent = `${totalLearners}`;
-  elements.managerCompletion.textContent = `${avgCompletion}%`;
-  elements.managerCompleted.textContent = `${completedJourneys}`;
-
-  elements.managerTableBody.innerHTML = "";
-
-  if (records.length === 0) {
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-    cell.colSpan = 5;
-    cell.textContent = "No learner records yet. Save profiles and complete modules to populate this report.";
-    row.appendChild(cell);
-    elements.managerTableBody.appendChild(row);
-    return;
-  }
-
-  records.forEach((record) => {
-    const row = document.createElement("tr");
+  const normalizedRecords = records.map((record) => {
     const safeAssociate = record.associateName || "Unknown";
     const safeRole = record.roleTitle || "Unknown";
     const safeProgress = Number.isFinite(record.progress) ? record.progress : 0;
@@ -1189,24 +1201,82 @@ function renderManagerDashboard() {
     const safeTotal = Number.isFinite(record.total) ? record.total : 0;
     const safeQuiz = Number.isFinite(record.quizAverage) ? record.quizAverage : 0;
 
+    return {
+      record,
+      safeAssociate,
+      safeRole,
+      safeProgress,
+      safeCompleted,
+      safeTotal,
+      safeQuiz,
+      risk: evaluateLearnerRisk(record)
+    };
+  });
+
+  const totalLearners = normalizedRecords.length;
+  const avgCompletion = totalLearners
+    ? Math.round(
+      normalizedRecords.reduce((sum, learner) => sum + learner.safeProgress, 0) / totalLearners
+    )
+    : 0;
+  const completedJourneys = normalizedRecords.filter(
+    (learner) => learner.safeProgress === 100
+  ).length;
+  const atRiskLearners = normalizedRecords.filter(
+    (learner) => learner.risk.isAtRisk
+  ).length;
+
+  elements.managerLearners.textContent = `${totalLearners}`;
+  elements.managerCompletion.textContent = `${avgCompletion}%`;
+  elements.managerCompleted.textContent = `${completedJourneys}`;
+  elements.managerAtRisk.textContent = `${atRiskLearners}`;
+
+  elements.managerTableBody.innerHTML = "";
+
+  if (normalizedRecords.length === 0) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 6;
+    cell.textContent = "No learner records yet. Save profiles and complete modules to populate this report.";
+    row.appendChild(cell);
+    elements.managerTableBody.appendChild(row);
+    return;
+  }
+
+  normalizedRecords.forEach((learner) => {
+    const row = document.createElement("tr");
+    if (learner.risk.isAtRisk) {
+      row.classList.add("risk-row");
+    }
+
     const associateCell = document.createElement("td");
-    associateCell.textContent = safeAssociate;
+    associateCell.textContent = learner.safeAssociate;
     row.appendChild(associateCell);
 
     const roleCell = document.createElement("td");
-    roleCell.textContent = safeRole;
+    roleCell.textContent = learner.safeRole;
     row.appendChild(roleCell);
 
     const progressCell = document.createElement("td");
-    progressCell.textContent = `${safeProgress}% (${safeCompleted}/${safeTotal})`;
+    progressCell.textContent = `${learner.safeProgress}% (${learner.safeCompleted}/${learner.safeTotal})`;
     row.appendChild(progressCell);
 
     const quizCell = document.createElement("td");
-    quizCell.textContent = `${safeQuiz}%`;
+    quizCell.textContent = `${learner.safeQuiz}%`;
     row.appendChild(quizCell);
 
+    const riskCell = document.createElement("td");
+    const riskBadge = document.createElement("span");
+    riskBadge.className = `risk-pill ${learner.risk.isAtRisk ? "at-risk" : "on-track"}`;
+    riskBadge.textContent = learner.risk.isAtRisk ? "At Risk" : "On Track";
+    if (learner.risk.reasons.length > 0) {
+      riskBadge.title = learner.risk.reasons.join(" | ");
+    }
+    riskCell.appendChild(riskBadge);
+    row.appendChild(riskCell);
+
     const updatedCell = document.createElement("td");
-    updatedCell.textContent = formatTimestamp(record.lastUpdated);
+    updatedCell.textContent = formatTimestamp(learner.record.lastUpdated);
     row.appendChild(updatedCell);
 
     elements.managerTableBody.appendChild(row);

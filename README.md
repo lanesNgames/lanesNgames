@@ -31,7 +31,8 @@ This prototype demonstrates initiative for a Training & Enablement-style role by
   - associates tracked
   - average completion percentage
   - completed journey count
-  - learner-level reporting table (role, progress, quiz average, and last update)
+  - at-risk learner count
+  - learner-level reporting table (role, progress, quiz average, risk status, and last update)
 - **Local persistence** using browser `localStorage` for profile, completion, and quiz outcomes
 - **New Balance-inspired styling** with red/black/white visual system
 
