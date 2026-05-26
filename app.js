@@ -564,9 +564,11 @@ function formatTimestamp(timestamp) {
 }
 
 function renderManagerDashboard() {
-  const records = Object.values(learnerRecords).sort((a, b) =>
-    b.lastUpdated.localeCompare(a.lastUpdated)
-  );
+  const records = Object.values(learnerRecords)
+    .filter((record) => Boolean(record))
+    .sort((a, b) =>
+      String(b.lastUpdated || "").localeCompare(String(a.lastUpdated || ""))
+    );
 
   const totalLearners = records.length;
   const avgCompletion = totalLearners
@@ -594,21 +596,27 @@ function renderManagerDashboard() {
 
   records.forEach((record) => {
     const row = document.createElement("tr");
+    const safeAssociate = record.associateName || "Unknown";
+    const safeRole = record.roleTitle || "Unknown";
+    const safeProgress = Number.isFinite(record.progress) ? record.progress : 0;
+    const safeCompleted = Number.isFinite(record.completed) ? record.completed : 0;
+    const safeTotal = Number.isFinite(record.total) ? record.total : 0;
+    const safeQuiz = Number.isFinite(record.quizAverage) ? record.quizAverage : 0;
 
     const associateCell = document.createElement("td");
-    associateCell.textContent = record.associateName;
+    associateCell.textContent = safeAssociate;
     row.appendChild(associateCell);
 
     const roleCell = document.createElement("td");
-    roleCell.textContent = record.roleTitle;
+    roleCell.textContent = safeRole;
     row.appendChild(roleCell);
 
     const progressCell = document.createElement("td");
-    progressCell.textContent = `${record.progress}% (${record.completed}/${record.total})`;
+    progressCell.textContent = `${safeProgress}% (${safeCompleted}/${safeTotal})`;
     row.appendChild(progressCell);
 
     const quizCell = document.createElement("td");
-    quizCell.textContent = `${record.quizAverage}%`;
+    quizCell.textContent = `${safeQuiz}%`;
     row.appendChild(quizCell);
 
     const updatedCell = document.createElement("td");
