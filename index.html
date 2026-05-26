@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Copilot Coach | Associate LMS</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Training &amp; Enablement Prototype</p>
+        <h1>Copilot Coach for Associates</h1>
+      </div>
+      <div class="header-actions">
+        <label class="inline-field" for="associate-name">
+          Associate
+          <input id="associate-name" type="text" placeholder="Enter your name" />
+        </label>
+        <button id="save-profile">Save Profile</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="card side-panel">
+        <section>
+          <h2>Role-Based Journey</h2>
+          <p class="muted">
+            Pick your role to load workflows, scenarios, and practical job aids.
+          </p>
+          <div id="role-buttons" class="button-group"></div>
+        </section>
+        <section class="job-aids">
+          <h3>Quick Job Aids</h3>
+          <ul id="job-aids-list"></ul>
+        </section>
+      </aside>
+
+      <section class="content">
+        <div class="stats-grid">
+          <article class="card stat">
+            <p class="muted">Modules Completed</p>
+            <h3 id="completed-count">0 / 0</h3>
+          </article>
+          <article class="card stat">
+            <p class="muted">Journey Progress</p>
+            <h3 id="progress-percent">0%</h3>
+          </article>
+          <article class="card stat">
+            <p class="muted">Knowledge Check Avg</p>
+            <h3 id="quiz-average">0%</h3>
+          </article>
+        </div>
+
+        <article class="card journey">
+          <div class="section-heading">
+            <div>
+              <h2 id="journey-title">Learning Journey</h2>
+              <p id="journey-description" class="muted"></p>
+            </div>
+            <span id="badge-status" class="badge">Not Started</span>
+          </div>
+          <div id="module-list" class="module-list"></div>
+        </article>
+      </section>
+    </main>
+
+    <template id="module-template">
+      <article class="module-item">
+        <div class="module-main">
+          <h3 class="module-title"></h3>
+          <p class="module-summary"></p>
+          <div class="meta-row">
+            <span class="pill module-time"></span>
+            <span class="pill module-mode"></span>
+          </div>
+        </div>
+        <div class="module-actions">
+          <button class="details-btn">View</button>
+          <button class="complete-btn">Mark Complete</button>
+        </div>
+      </article>
+    </template>
+
+    <dialog id="module-dialog">
+      <article class="dialog-card">
+        <header class="section-heading">
+          <h3 id="dialog-title"></h3>
+          <button id="close-dialog" class="ghost-btn">Close</button>
+        </header>
+        <p id="dialog-summary"></p>
+        <section>
+          <h4>What you will practice</h4>
+          <ul id="dialog-outcomes"></ul>
+        </section>
+        <section>
+          <h4>Scenario challenge</h4>
+          <p id="dialog-scenario"></p>
+        </section>
+        <section>
+          <h4>Knowledge check</h4>
+          <p id="dialog-question"></p>
+          <div id="dialog-options" class="button-group stacked"></div>
+          <p id="dialog-feedback" class="feedback"></p>
+        </section>
+      </article>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
