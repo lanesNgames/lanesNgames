@@ -33,6 +33,8 @@ This prototype demonstrates initiative for a Training & Enablement-style role by
   - completed journey count
   - at-risk learner count
   - learner-level reporting table (role, progress, quiz average, risk status, and last update)
+  - filter controls (All / At Risk / On Track)
+  - sort controls (highest risk, oldest update, lowest quiz, lowest progress, most recent update)
 - **Local persistence** using browser `localStorage` for profile, completion, and quiz outcomes
 - **New Balance-inspired styling** with red/black/white visual system
 

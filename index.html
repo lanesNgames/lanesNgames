@@ -101,6 +101,26 @@
           <p class="muted risk-criteria">
             At-risk criteria: quiz average below 70% or no progress updates for 7+ days before completion.
           </p>
+          <div class="manager-controls">
+            <label class="inline-field manager-field" for="manager-filter">
+              Filter Learners
+              <select id="manager-filter">
+                <option value="all">All</option>
+                <option value="at-risk">At Risk</option>
+                <option value="on-track">On Track</option>
+              </select>
+            </label>
+            <label class="inline-field manager-field" for="manager-sort">
+              Sort By
+              <select id="manager-sort">
+                <option value="risk-desc">Highest Risk First</option>
+                <option value="stale-desc">Oldest Update First</option>
+                <option value="quiz-asc">Lowest Quiz First</option>
+                <option value="progress-asc">Lowest Progress First</option>
+                <option value="updated-desc">Most Recent Update</option>
+              </select>
+            </label>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>

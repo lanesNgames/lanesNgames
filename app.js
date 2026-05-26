@@ -730,6 +730,8 @@ const elements = {
   managerCompletion: document.getElementById("manager-completion"),
   managerCompleted: document.getElementById("manager-completed"),
   managerAtRisk: document.getElementById("manager-at-risk"),
+  managerFilter: document.getElementById("manager-filter"),
+  managerSort: document.getElementById("manager-sort"),
   managerTableBody: document.getElementById("manager-table-body")
 };
 
@@ -738,6 +740,10 @@ const learnerRecordsKey = "copilot-lms-learners";
 const PASS_THRESHOLD = 80;
 const QUIZ_RISK_THRESHOLD = 70;
 const STALE_DAYS_THRESHOLD = 7;
+const managerViewState = {
+  filter: "all",
+  sort: "risk-desc"
+};
 
 const defaultState = {
   associateName: "",
@@ -1186,7 +1192,43 @@ function evaluateLearnerRisk(record) {
   };
 }
 
+function sortLearners(learners, sortKey) {
+  const list = [...learners];
+
+  list.sort((a, b) => {
+    switch (sortKey) {
+      case "stale-desc":
+        return b.daysSinceUpdate - a.daysSinceUpdate;
+      case "quiz-asc":
+        return a.safeQuiz - b.safeQuiz;
+      case "progress-asc":
+        return a.safeProgress - b.safeProgress;
+      case "updated-desc":
+        return String(b.record.lastUpdated || "").localeCompare(
+          String(a.record.lastUpdated || "")
+        );
+      case "risk-desc":
+      default: {
+        const aRiskScore = a.risk.isAtRisk ? 1 : 0;
+        const bRiskScore = b.risk.isAtRisk ? 1 : 0;
+        if (bRiskScore !== aRiskScore) {
+          return bRiskScore - aRiskScore;
+        }
+        if (b.daysSinceUpdate !== a.daysSinceUpdate) {
+          return b.daysSinceUpdate - a.daysSinceUpdate;
+        }
+        return a.safeQuiz - b.safeQuiz;
+      }
+    }
+  });
+
+  return list;
+}
+
 function renderManagerDashboard() {
+  elements.managerFilter.value = managerViewState.filter;
+  elements.managerSort.value = managerViewState.sort;
+
   const records = Object.values(learnerRecords)
     .filter((record) => Boolean(record))
     .sort((a, b) =>
@@ -1209,6 +1251,7 @@ function renderManagerDashboard() {
       safeCompleted,
       safeTotal,
       safeQuiz,
+      daysSinceUpdate: getDaysSince(record.lastUpdated) ?? 0,
       risk: evaluateLearnerRisk(record)
     };
   });
@@ -1231,6 +1274,14 @@ function renderManagerDashboard() {
   elements.managerCompleted.textContent = `${completedJourneys}`;
   elements.managerAtRisk.textContent = `${atRiskLearners}`;
 
+  let tableRows = normalizedRecords;
+  if (managerViewState.filter === "at-risk") {
+    tableRows = tableRows.filter((learner) => learner.risk.isAtRisk);
+  } else if (managerViewState.filter === "on-track") {
+    tableRows = tableRows.filter((learner) => !learner.risk.isAtRisk);
+  }
+  tableRows = sortLearners(tableRows, managerViewState.sort);
+
   elements.managerTableBody.innerHTML = "";
 
   if (normalizedRecords.length === 0) {
@@ -1243,7 +1294,17 @@ function renderManagerDashboard() {
     return;
   }
 
-  normalizedRecords.forEach((learner) => {
+  if (tableRows.length === 0) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 6;
+    cell.textContent = "No learners match the current filter.";
+    row.appendChild(cell);
+    elements.managerTableBody.appendChild(row);
+    return;
+  }
+
+  tableRows.forEach((learner) => {
     const row = document.createElement("tr");
     if (learner.risk.isAtRisk) {
       row.classList.add("risk-row");
@@ -1376,5 +1437,15 @@ elements.saveProfile.addEventListener("click", () => {
 });
 
 elements.downloadCertificate.addEventListener("click", downloadCertificate);
+
+elements.managerFilter.addEventListener("change", (event) => {
+  managerViewState.filter = event.target.value;
+  renderManagerDashboard();
+});
+
+elements.managerSort.addEventListener("change", (event) => {
+  managerViewState.sort = event.target.value;
+  renderManagerDashboard();
+});
 
 render();

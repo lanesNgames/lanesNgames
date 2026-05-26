@@ -74,6 +74,14 @@ input {
   padding: 0.45rem 0.6rem;
 }
 
+select {
+  border: 1px solid #8a8a8a;
+  background: #fafafa;
+  color: #111111;
+  border-radius: 0.4rem;
+  padding: 0.45rem 0.6rem;
+}
+
 button {
   border: none;
   border-radius: 0.45rem;
@@ -319,6 +327,16 @@ dialog::backdrop {
 .risk-criteria {
   font-size: 0.82rem;
   margin-top: -0.2rem;
+}
+
+.manager-controls {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.manager-field {
+  min-width: 200px;
 }
 
 .manager-stats .card {
