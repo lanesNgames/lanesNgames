@@ -19,6 +19,7 @@ const roleJourneys = [
           "Learn safe, practical prompts and when to use Copilot during a shift.",
         time: "18 min",
         mode: "Virtual",
+        level: "Foundational",
         outcomes: [
           "Use context-rich prompts that include intent, audience, and constraints.",
           "Recognize when to verify Copilot output before sharing with customers.",
@@ -62,6 +63,7 @@ const roleJourneys = [
           "Use scenario-based prompts to prepare for common sales floor interactions.",
         time: "22 min",
         mode: "Virtual + In-person",
+        level: "Foundational",
         outcomes: [
           "Generate role-play scripts for difficult customer interactions.",
           "Use Copilot to simplify technical product details.",
@@ -105,6 +107,7 @@ const roleJourneys = [
           "Create quick reference assets and shift support content with Copilot.",
         time: "16 min",
         mode: "Self-paced",
+        level: "Intermediate",
         outcomes: [
           "Turn policy notes into one-page job aids.",
           "Draft shift recap templates for team handoff.",
@@ -148,6 +151,7 @@ const roleJourneys = [
           "Use Copilot to plan floor priorities, signage language, and recovery tasks.",
         time: "20 min",
         mode: "Facilitated",
+        level: "Intermediate",
         outcomes: [
           "Prioritize merchandising tasks based on traffic patterns.",
           "Draft concise, customer-friendly signage text.",
@@ -191,6 +195,7 @@ const roleJourneys = [
           "Turn shift outcomes into learning moments and next-shift action plans.",
         time: "17 min",
         mode: "Self-paced",
+        level: "Advanced",
         outcomes: [
           "Summarize wins and blockers with clear next actions.",
           "Use Copilot to draft coaching asks for supervisors.",
@@ -249,6 +254,7 @@ const roleJourneys = [
           "Convert process changes into clear, practical coaching content.",
         time: "20 min",
         mode: "Facilitated",
+        level: "Foundational",
         outcomes: [
           "Summarize system updates into role-based action items.",
           "Use Copilot to generate huddle discussion guides.",
@@ -292,6 +298,7 @@ const roleJourneys = [
           "Use Copilot during live sessions to answer questions and tailor examples.",
         time: "18 min",
         mode: "Live Virtual",
+        level: "Foundational",
         outcomes: [
           "Create role-play prompts during Q&A.",
           "Generate alternate examples for different learner levels.",
@@ -335,6 +342,7 @@ const roleJourneys = [
           "Track confidence, usage, and consistency across the learning journey.",
         time: "19 min",
         mode: "Self-paced",
+        level: "Intermediate",
         outcomes: [
           "Define simple adoption metrics for team check-ins.",
           "Use Copilot to summarize qualitative feedback.",
@@ -378,6 +386,7 @@ const roleJourneys = [
           "Use Copilot to build focused coaching plans and practice routines.",
         time: "21 min",
         mode: "Facilitated + Self-paced",
+        level: "Intermediate",
         outcomes: [
           "Identify behavior-level gaps from observed workflows.",
           "Generate scenario practices aligned to specific needs.",
@@ -421,6 +430,7 @@ const roleJourneys = [
           "Prepare launch messaging, manager alignment, and support plans for new initiatives.",
         time: "18 min",
         mode: "Virtual",
+        level: "Advanced",
         outcomes: [
           "Sequence launch communication across stakeholder groups.",
           "Draft clear callouts for frontline and manager audiences.",
@@ -479,6 +489,7 @@ const roleJourneys = [
           "Apply Copilot to reduce ambiguity in repeat operational tasks.",
         time: "18 min",
         mode: "Self-paced",
+        level: "Foundational",
         outcomes: [
           "Build prompts that include process IDs and constraints.",
           "Generate exception handling notes.",
@@ -522,6 +533,7 @@ const roleJourneys = [
           "Draft clear updates for store, logistics, and leadership partners.",
         time: "15 min",
         mode: "Virtual",
+        level: "Foundational",
         outcomes: [
           "Rewrite technical details for different audiences.",
           "Generate concise updates with risks and dependencies.",
@@ -565,6 +577,7 @@ const roleJourneys = [
           "Capture lessons learned and refresh enablement assets over time.",
         time: "17 min",
         mode: "Facilitated",
+        level: "Intermediate",
         outcomes: [
           "Convert incident logs into training improvements.",
           "Update job aids from recurring support trends.",
@@ -608,6 +621,7 @@ const roleJourneys = [
           "Use Copilot to triage incidents quickly and route escalations correctly.",
         time: "20 min",
         mode: "Facilitated + Virtual",
+        level: "Intermediate",
         outcomes: [
           "Classify incident severity with clear criteria.",
           "Draft escalation summaries for fast decision-making.",
@@ -651,6 +665,7 @@ const roleJourneys = [
           "Convert policy updates into usable SOPs and micro-learning assets.",
         time: "19 min",
         mode: "Self-paced",
+        level: "Advanced",
         outcomes: [
           "Transform policy language into role-ready SOP checklists.",
           "Create micro-learning refreshers tied to compliance risk points.",
@@ -719,6 +734,7 @@ const elements = {
 
 const storageKey = "copilot-lms-state";
 const learnerRecordsKey = "copilot-lms-learners";
+const PASS_THRESHOLD = 80;
 
 const defaultState = {
   associateName: "",
@@ -811,6 +827,47 @@ function getScenarioScoreKey(moduleId, scenarioId) {
   return `${moduleId}::${scenarioId}`;
 }
 
+function getModuleAssessment(module) {
+  const scenarios = getModuleScenarios(module);
+  if (scenarios.length === 0) {
+    return {
+      scenarioCount: 0,
+      answeredCount: 0,
+      correctCount: 0,
+      average: 0,
+      passed: true
+    };
+  }
+
+  const scores = scenarios
+    .map((scenario) => appState.quizScores[getScenarioScoreKey(module.id, scenario.id)])
+    .filter((score) => typeof score === "number");
+  const answeredCount = scores.length;
+  const correctCount = scores.filter((score) => score === 100).length;
+  const average = answeredCount
+    ? Math.round(scores.reduce((sum, score) => sum + score, 0) / answeredCount)
+    : 0;
+  const passed = answeredCount === scenarios.length && average >= PASS_THRESHOLD;
+
+  return {
+    scenarioCount: scenarios.length,
+    answeredCount,
+    correctCount,
+    average,
+    passed
+  };
+}
+
+function isModuleUnlocked(modules, moduleIndex) {
+  if (moduleIndex === 0) {
+    return true;
+  }
+
+  const previousModule = modules[moduleIndex - 1];
+  const previousAssessment = getModuleAssessment(previousModule);
+  return moduleIsComplete(previousModule.id) && previousAssessment.passed;
+}
+
 function getJourneyStats(roleId = appState.selectedRoleId) {
   const journey = getJourneyById(roleId);
   const total = journey.modules.length;
@@ -864,7 +921,17 @@ function syncCurrentLearnerRecord() {
   saveLearnerRecords();
 }
 
-function markModuleComplete(moduleId) {
+function markModuleComplete(moduleId, modules, moduleIndex) {
+  const module = modules[moduleIndex];
+  if (!module) {
+    return;
+  }
+
+  const assessment = getModuleAssessment(module);
+  if (!isModuleUnlocked(modules, moduleIndex) || !assessment.passed) {
+    return;
+  }
+
   appState.completedModules[moduleId] = true;
   saveState();
   syncCurrentLearnerRecord();
@@ -875,8 +942,7 @@ function updateQuizScore(moduleId, scenarioId, score) {
   appState.quizScores[getScenarioScoreKey(moduleId, scenarioId)] = score;
   saveState();
   syncCurrentLearnerRecord();
-  updateStats();
-  renderManagerDashboard();
+  render();
 }
 
 function updateStats() {
@@ -1003,37 +1069,59 @@ function renderModules() {
   const currentJourney = getCurrentJourney();
   elements.moduleList.innerHTML = "";
 
-  currentJourney.modules.forEach((module) => {
+  currentJourney.modules.forEach((module, index) => {
     const fragment = elements.moduleTemplate.content.cloneNode(true);
     const container = fragment.querySelector(".module-item");
     const title = fragment.querySelector(".module-title");
     const summary = fragment.querySelector(".module-summary");
+    const status = fragment.querySelector(".module-status");
     const time = fragment.querySelector(".module-time");
     const mode = fragment.querySelector(".module-mode");
     const metaRow = fragment.querySelector(".meta-row");
     const detailsButton = fragment.querySelector(".details-btn");
     const completeButton = fragment.querySelector(".complete-btn");
-    const scenarioCount = getModuleScenarios(module).length;
+    const assessment = getModuleAssessment(module);
+    const unlocked = isModuleUnlocked(currentJourney.modules, index);
+    const isCompleted = moduleIsComplete(module.id);
 
     title.textContent = module.title;
     summary.textContent = module.summary;
+    status.textContent = unlocked
+      ? `Assessment: ${assessment.correctCount}/${assessment.scenarioCount} correct (${assessment.average}% avg, pass ${PASS_THRESHOLD}%+)`
+      : "Locked: pass and complete the previous module to unlock.";
     time.textContent = module.time;
     mode.textContent = module.mode;
-    if (scenarioCount > 0) {
+    if (assessment.scenarioCount > 0) {
       const scenarioPill = document.createElement("span");
       scenarioPill.className = "pill";
-      scenarioPill.textContent = `${scenarioCount} scenarios`;
+      scenarioPill.textContent = `${assessment.scenarioCount} scenarios`;
       metaRow.appendChild(scenarioPill);
     }
+    if (module.level) {
+      const levelPill = document.createElement("span");
+      levelPill.className = "pill";
+      levelPill.textContent = module.level;
+      metaRow.appendChild(levelPill);
+    }
 
-    if (moduleIsComplete(module.id)) {
+    if (isCompleted) {
       container.classList.add("completed");
       completeButton.textContent = "Completed";
+      completeButton.disabled = true;
+    } else if (!unlocked) {
+      container.classList.add("locked");
+      detailsButton.disabled = true;
+      completeButton.textContent = "Locked";
+      completeButton.disabled = true;
+    } else if (!assessment.passed) {
+      completeButton.textContent = "Pass scenarios to complete";
       completeButton.disabled = true;
     }
 
     detailsButton.addEventListener("click", () => openModuleDialog(module));
-    completeButton.addEventListener("click", () => markModuleComplete(module.id));
+    completeButton.addEventListener("click", () =>
+      markModuleComplete(module.id, currentJourney.modules, index)
+    );
 
     elements.moduleList.appendChild(fragment);
   });

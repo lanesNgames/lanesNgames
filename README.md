@@ -18,6 +18,10 @@ This prototype demonstrates initiative for a Training & Enablement-style role by
   - Operations Associate
 - **Expanded learning paths** with 5 modules per role (15 modules total)
 - **Scenario dialog** per module with multiple scenario-based questions (30 total checks)
+- **Difficulty tiers** per module: Foundational, Intermediate, and Advanced
+- **Adaptive unlocks**:
+  - modules unlock sequentially
+  - each next module requires passing prior module scenarios (80%+) and completing that module
 - **Progress dashboard**:
   - modules completed
   - journey progress
@@ -29,6 +33,7 @@ This prototype demonstrates initiative for a Training & Enablement-style role by
   - completed journey count
   - learner-level reporting table (role, progress, quiz average, and last update)
 - **Local persistence** using browser `localStorage` for profile, completion, and quiz outcomes
+- **New Balance-inspired styling** with red/black/white visual system
 
 ## Run locally
 
