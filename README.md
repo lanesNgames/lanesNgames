@@ -16,19 +16,27 @@ This prototype demonstrates initiative for a Training & Enablement-style role by
   - Store Associate
   - Team Lead
   - Operations Associate
-- **Module cards** with estimated time and modality
-- **Scenario dialog** per module with a short knowledge check
+- **Expanded learning paths** with 5 modules per role (15 modules total)
+- **Scenario dialog** per module with multiple scenario-based questions (30 total checks)
+- **Difficulty tiers** per module: Foundational, Intermediate, and Advanced
+- **Adaptive unlocks**:
+  - modules unlock sequentially
+  - each next module requires passing prior module scenarios (80%+) and completing that module
 - **Progress dashboard**:
   - modules completed
   - journey progress
-  - average knowledge check score
+  - average knowledge check score across all scenario questions
 - **Downloadable completion certificate** (SVG) unlocked when a named associate completes a journey
 - **Manager dashboard** with:
   - associates tracked
   - average completion percentage
   - completed journey count
-  - learner-level reporting table (role, progress, quiz average, and last update)
+  - at-risk learner count
+  - learner-level reporting table (role, progress, quiz average, risk status, and last update)
+  - filter controls (All / At Risk / On Track)
+  - sort controls (highest risk, oldest update, lowest quiz, lowest progress, most recent update)
 - **Local persistence** using browser `localStorage` for profile, completion, and quiz outcomes
+- **New Balance-inspired styling** with red/black/white visual system
 
 ## Run locally
 

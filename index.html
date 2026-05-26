@@ -57,6 +57,9 @@
             <div>
               <h2 id="journey-title">Learning Journey</h2>
               <p id="journey-description" class="muted"></p>
+              <p class="unlock-note muted">
+                Unlock path: pass each module scenarios, then mark complete to open the next module.
+              </p>
             </div>
             <div class="journey-actions">
               <span id="badge-status" class="badge">Not Started</span>
@@ -90,6 +93,33 @@
               <p class="muted">Journeys Completed</p>
               <h3 id="manager-completed">0</h3>
             </article>
+            <article class="card stat">
+              <p class="muted">At-Risk Learners</p>
+              <h3 id="manager-at-risk">0</h3>
+            </article>
+          </div>
+          <p class="muted risk-criteria">
+            At-risk criteria: quiz average below 70% or no progress updates for 7+ days before completion.
+          </p>
+          <div class="manager-controls">
+            <label class="inline-field manager-field" for="manager-filter">
+              Filter Learners
+              <select id="manager-filter">
+                <option value="all">All</option>
+                <option value="at-risk">At Risk</option>
+                <option value="on-track">On Track</option>
+              </select>
+            </label>
+            <label class="inline-field manager-field" for="manager-sort">
+              Sort By
+              <select id="manager-sort">
+                <option value="risk-desc">Highest Risk First</option>
+                <option value="stale-desc">Oldest Update First</option>
+                <option value="quiz-asc">Lowest Quiz First</option>
+                <option value="progress-asc">Lowest Progress First</option>
+                <option value="updated-desc">Most Recent Update</option>
+              </select>
+            </label>
           </div>
           <div class="table-wrap">
             <table>
@@ -99,6 +129,7 @@
                   <th>Role</th>
                   <th>Progress</th>
                   <th>Quiz Avg</th>
+                  <th>Risk Status</th>
                   <th>Last Updated</th>
                 </tr>
               </thead>
@@ -114,6 +145,7 @@
         <div class="module-main">
           <h3 class="module-title"></h3>
           <p class="module-summary"></p>
+          <p class="module-status muted"></p>
           <div class="meta-row">
             <span class="pill module-time"></span>
             <span class="pill module-mode"></span>
@@ -138,14 +170,8 @@
           <ul id="dialog-outcomes"></ul>
         </section>
         <section>
-          <h4>Scenario challenge</h4>
-          <p id="dialog-scenario"></p>
-        </section>
-        <section>
-          <h4>Knowledge check</h4>
-          <p id="dialog-question"></p>
-          <div id="dialog-options" class="button-group stacked"></div>
-          <p id="dialog-feedback" class="feedback"></p>
+          <h4>Scenario challenges</h4>
+          <div id="dialog-scenarios" class="scenario-list"></div>
         </section>
       </article>
     </dialog>
