@@ -16,12 +16,12 @@ This prototype demonstrates initiative for a Training & Enablement-style role by
   - Store Associate
   - Team Lead
   - Operations Associate
-- **Module cards** with estimated time and modality
-- **Scenario dialog** per module with a short knowledge check
+- **Expanded learning paths** with 5 modules per role (15 modules total)
+- **Scenario dialog** per module with multiple scenario-based questions (30 total checks)
 - **Progress dashboard**:
   - modules completed
   - journey progress
-  - average knowledge check score
+  - average knowledge check score across all scenario questions
 - **Downloadable completion certificate** (SVG) unlocked when a named associate completes a journey
 - **Manager dashboard** with:
   - associates tracked

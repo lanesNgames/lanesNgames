@@ -5,9 +5,11 @@ const roleJourneys = [
     description:
       "Build confidence using Microsoft Copilot for customer conversations, product knowledge, and faster daily execution.",
     jobAids: [
-      "Copilot prompt starter: customer style + activity + weather.",
+      "Copilot prompt starter: customer profile + activity + weather + budget.",
       "2-minute product comparison prompt for in-store recommendations.",
-      "Daily opening checklist rewording template for team huddles."
+      "Shift handoff template: wins, missed opportunities, follow-up tasks.",
+      "Returns conversation script generator with policy-safe language.",
+      "Opening and closing checklist simplifier for quick huddles."
     ],
     modules: [
       {
@@ -15,75 +17,215 @@ const roleJourneys = [
         title: "Copilot Basics for Frontline Work",
         summary:
           "Learn safe, practical prompts and when to use Copilot during a shift.",
-        time: "15 min",
+        time: "18 min",
         mode: "Virtual",
         outcomes: [
           "Use context-rich prompts that include intent, audience, and constraints.",
           "Recognize when to verify Copilot output before sharing with customers.",
           "Save reusable prompts for repeat workflows."
         ],
-        scenario:
-          "A customer asks for a running shoe for flat feet, marathon training, and rainy conditions. Draft a Copilot prompt that produces a concise recommendation script.",
-        quiz: {
-          question:
-            "Which prompt is most likely to return useful, role-specific output?",
-          options: [
-            "Tell me about shoes.",
-            "Create a customer-friendly recommendation for a marathon runner with flat feet in rainy weather, compare top 3 options in 4 bullet points.",
-            "What are the best products?"
-          ],
-          answerIndex: 1
-        }
+        scenarios: [
+          {
+            id: "prompt-quality",
+            title: "Scenario 1: Product recommendation prompt",
+            context:
+              "A customer is training for a half marathon and has mild overpronation. They also want something for wet-weather runs.",
+            question:
+              "Which prompt is most likely to produce a useful, role-specific recommendation script?",
+            options: [
+              "Tell me about running shoes.",
+              "Create a concise recommendation script for a half-marathon runner with mild overpronation and rainy-weather needs. Include 3 options and one follow-up question to ask.",
+              "What is your favorite shoe?"
+            ],
+            answerIndex: 1
+          },
+          {
+            id: "safe-use",
+            title: "Scenario 2: Verification in the flow of work",
+            context:
+              "Copilot gives a product feature claim you have not seen on the floor card.",
+            question:
+              "What is the best next step before using that claim with a customer?",
+            options: [
+              "Share it immediately to move the sale forward.",
+              "Check trusted product sources or a manager, then use verified wording.",
+              "Ignore Copilot forever."
+            ],
+            answerIndex: 1
+          }
+        ]
       },
       {
         id: "sa-2",
         title: "Scenario Practice: Customer Dialogues",
         summary:
           "Use scenario-based prompts to prepare for common sales floor interactions.",
-        time: "20 min",
+        time: "22 min",
         mode: "Virtual + In-person",
         outcomes: [
           "Generate role-play scripts for difficult customer interactions.",
           "Use Copilot to simplify technical product details.",
-          "Adapt tone for first-time vs experienced athletes."
+          "Adapt tone for first-time versus experienced athletes."
         ],
-        scenario:
-          "An associate needs to explain cushioning differences without sounding overly technical. Use Copilot to create two scripts: beginner and expert.",
-        quiz: {
-          question:
-            "Why is scenario-based prompting useful for enablement?",
-          options: [
-            "It creates generic scripts that can be copied everywhere.",
-            "It mirrors real workflows and improves confidence before live situations.",
-            "It removes the need for manager coaching."
-          ],
-          answerIndex: 1
-        }
+        scenarios: [
+          {
+            id: "tone-switch",
+            title: "Scenario 1: Tone adaptation",
+            context:
+              "You need two scripts: one for a first-time runner and one for an experienced runner comparing cushioning technologies.",
+            question:
+              "Why is asking Copilot for audience-specific scripts valuable?",
+            options: [
+              "It helps tailor complexity and language to customer needs.",
+              "It removes the need to listen to customers.",
+              "It guarantees every customer wants the same recommendation."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "objection-handling",
+            title: "Scenario 2: Handling price objection",
+            context:
+              "A customer likes the recommended shoe but says the price feels high.",
+            question:
+              "What should your Copilot prompt include to generate a strong response script?",
+            options: [
+              "Only ask for a discount script.",
+              "Ask for value framing, alternatives at lower price, and one clarifying question.",
+              "Ask Copilot to pressure the customer."
+            ],
+            answerIndex: 1
+          }
+        ]
       },
       {
         id: "sa-3",
         title: "In-the-Flow Job Aids",
         summary:
           "Create quick reference assets and shift support content with Copilot.",
-        time: "12 min",
+        time: "16 min",
         mode: "Self-paced",
         outcomes: [
           "Turn policy notes into one-page job aids.",
           "Draft shift recap templates for team handoff.",
           "Build reusable prompts for repetitive tasks."
         ],
-        scenario:
-          "Inventory process changed this week. Create a short job aid your team can reference during closing.",
-        quiz: {
-          question:
-            "What is the best format for a shift-time job aid?",
-          options: [
-            "Long narrative with every policy detail.",
-            "Short checklist with steps, owners, and exception notes.",
-            "Open-ended memo with no task order."
-          ],
-          answerIndex: 1
-        }
+        scenarios: [
+          {
+            id: "job-aid-format",
+            title: "Scenario 1: Checklist quality",
+            context:
+              "Inventory process changed this week and teammates are missing a key step during closing.",
+            question:
+              "Which job aid format works best during a busy shift?",
+            options: [
+              "A long narrative explaining every edge case first.",
+              "A short checklist with steps, owners, and escalation notes.",
+              "A memo with no sequence."
+            ],
+            answerIndex: 1
+          },
+          {
+            id: "handoff-consistency",
+            title: "Scenario 2: Shift handoff consistency",
+            context:
+              "Different associates give uneven handoff notes, causing confusion for morning teams.",
+            question:
+              "What should Copilot generate to improve consistency?",
+            options: [
+              "A standardized handoff template with required fields.",
+              "No written notes; rely on memory.",
+              "A single sentence recap regardless of issues."
+            ],
+            answerIndex: 0
+          }
+        ]
+      },
+      {
+        id: "sa-4",
+        title: "Merchandising and Floor Readiness",
+        summary:
+          "Use Copilot to plan floor priorities, signage language, and recovery tasks.",
+        time: "20 min",
+        mode: "Facilitated",
+        outcomes: [
+          "Prioritize merchandising tasks based on traffic patterns.",
+          "Draft concise, customer-friendly signage text.",
+          "Build task blocks for floor recovery under time constraints."
+        ],
+        scenarios: [
+          {
+            id: "priority-order",
+            title: "Scenario 1: Recovery priorities",
+            context:
+              "You have 30 minutes before peak traffic and several zones need recovery.",
+            question:
+              "Which Copilot output is most useful for immediate execution?",
+            options: [
+              "A ranked task list with estimated minutes and owner suggestions.",
+              "A full history of all past floor changes.",
+              "A generic paragraph about merchandising."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "signage-clarity",
+            title: "Scenario 2: Signage rewrite",
+            context:
+              "Current signage is too technical for first-time customers.",
+            question:
+              "What should you ask Copilot to optimize?",
+            options: [
+              "Use shorter wording, benefits-first phrasing, and plain language.",
+              "Add more product jargon and abbreviations.",
+              "Keep text long so customers read everything."
+            ],
+            answerIndex: 0
+          }
+        ]
+      },
+      {
+        id: "sa-5",
+        title: "Post-Shift Reflection and Development",
+        summary:
+          "Turn shift outcomes into learning moments and next-shift action plans.",
+        time: "17 min",
+        mode: "Self-paced",
+        outcomes: [
+          "Summarize wins and blockers with clear next actions.",
+          "Use Copilot to draft coaching asks for supervisors.",
+          "Build continuous-improvement habits from daily work."
+        ],
+        scenarios: [
+          {
+            id: "reflection-loop",
+            title: "Scenario 1: Daily learning loop",
+            context:
+              "Your team missed add-on opportunities in two customer segments today.",
+            question:
+              "What is the strongest Copilot use after shift end?",
+            options: [
+              "Draft a reflection with segment-specific improvements and a plan for tomorrow.",
+              "Ignore the issue and hope tomorrow is better.",
+              "Write only sales totals with no context."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "coaching-request",
+            title: "Scenario 2: Manager coaching prep",
+            context:
+              "You want targeted coaching in greeting and discovery questions.",
+            question:
+              "Which output helps your manager coach you effectively?",
+            options: [
+              "A vague request to improve everything.",
+              "A concise note with 2 observed gaps, 1 goal, and practice scenarios.",
+              "No request; wait for annual review."
+            ],
+            answerIndex: 1
+          }
+        ]
       }
     ]
   },
@@ -94,8 +236,10 @@ const roleJourneys = [
       "Enable leads to coach associates, communicate updates, and drive adoption with practical Copilot workflows.",
     jobAids: [
       "Weekly enablement recap template: wins, blockers, support needed.",
-      "Prompt for rewriting system updates into plain-language coaching points.",
-      "Coaching prep prompt for scenario-based huddles."
+      "Workflow update translator: system language to floor-ready coaching points.",
+      "Coaching prep prompt for scenario-based huddles.",
+      "Adoption pulse template: confidence, consistency, and escalation trends.",
+      "Launch-day communications checklist across channels."
     ],
     modules: [
       {
@@ -103,75 +247,215 @@ const roleJourneys = [
         title: "Translating Workflow Changes into Training",
         summary:
           "Convert process changes into clear, practical coaching content.",
-        time: "18 min",
+        time: "20 min",
         mode: "Facilitated",
         outcomes: [
           "Summarize system updates into role-based action items.",
           "Use Copilot to generate huddle discussion guides.",
           "Document adoption risks and mitigation plans."
         ],
-        scenario:
-          "A returns workflow changed. Draft coaching notes for new associates and experienced associates in separate sections.",
-        quiz: {
-          question:
-            "What should be included when communicating a workflow update?",
-          options: [
-            "Only the system terminology.",
-            "Role impact, key actions, and where to get support.",
-            "A single broad announcement."
-          ],
-          answerIndex: 1
-        }
+        scenarios: [
+          {
+            id: "workflow-brief",
+            title: "Scenario 1: Workflow briefing",
+            context:
+              "Returns workflow changed and associates are confused about exceptions.",
+            question:
+              "What should a lead ask Copilot to generate first?",
+            options: [
+              "A role-based quick brief with key actions, exceptions, and where to escalate.",
+              "A full technical document copied directly from system notes.",
+              "A generic motivational message only."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "risk-framing",
+            title: "Scenario 2: Adoption risk framing",
+            context:
+              "The update impacts peak-hour transactions.",
+            question:
+              "Which communication approach best reduces risk?",
+            options: [
+              "Share once in chat and assume adoption.",
+              "Provide role impacts, examples, and a same-day practice scenario.",
+              "Delay communication until issues appear."
+            ],
+            answerIndex: 1
+          }
+        ]
       },
       {
         id: "tl-2",
         title: "Facilitation with Copilot",
         summary:
           "Use Copilot during live sessions to answer questions and tailor examples.",
-        time: "15 min",
+        time: "18 min",
         mode: "Live Virtual",
         outcomes: [
           "Create role-play prompts during Q&A.",
           "Generate alternate examples for different learner levels.",
           "Capture session notes and action items efficiently."
         ],
-        scenario:
-          "During a virtual training, learners ask for an example specific to weekend traffic. Build it in Copilot and share quickly.",
-        quiz: {
-          question:
-            "How does Copilot best support facilitation?",
-          options: [
-            "By replacing the facilitator.",
-            "By generating relevant examples and follow-up materials in real time.",
-            "By eliminating learner interaction."
-          ],
-          answerIndex: 1
-        }
+        scenarios: [
+          {
+            id: "live-questions",
+            title: "Scenario 1: Real-time examples",
+            context:
+              "During virtual training, associates ask for examples specific to weekend traffic.",
+            question:
+              "How should Copilot support facilitation in this moment?",
+            options: [
+              "Generate role-specific examples and immediate follow-up practice prompts.",
+              "Replace the facilitator and run the session alone.",
+              "Postpone all questions until next week."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "action-capture",
+            title: "Scenario 2: Session follow-up",
+            context:
+              "You need to send clear recap notes with owners and due dates.",
+            question:
+              "What should your Copilot prompt request?",
+            options: [
+              "A recap grouped by theme, owner, and deadline with unresolved questions.",
+              "A transcript dump with no structure.",
+              "Only a thank-you message."
+            ],
+            answerIndex: 0
+          }
+        ]
       },
       {
         id: "tl-3",
         title: "Measuring Adoption",
         summary:
           "Track confidence, usage, and consistency across the learning journey.",
-        time: "14 min",
+        time: "19 min",
         mode: "Self-paced",
         outcomes: [
           "Define simple adoption metrics for team check-ins.",
           "Use Copilot to summarize qualitative feedback.",
           "Identify content to refresh based on recurring issues."
         ],
-        scenario:
-          "You received mixed feedback after launch. Use Copilot to group comments into themes and propose next actions.",
-        quiz: {
-          question:
-            "Which metric best indicates practical adoption?",
-          options: [
-            "Number of slides shown in training.",
-            "Consistent task execution with fewer support escalations.",
-            "Total meeting length."
-          ],
-          answerIndex: 1
-        }
+        scenarios: [
+          {
+            id: "metric-choice",
+            title: "Scenario 1: Metric selection",
+            context:
+              "Leadership asks if training worked after rollout.",
+            question:
+              "Which metric best reflects practical adoption?",
+            options: [
+              "Number of slides presented in class.",
+              "Consistent task execution with fewer support escalations.",
+              "Length of the kickoff meeting."
+            ],
+            answerIndex: 1
+          },
+          {
+            id: "feedback-synthesis",
+            title: "Scenario 2: Theme extraction",
+            context:
+              "You received mixed qualitative comments from multiple stores.",
+            question:
+              "How should Copilot help synthesize this feedback?",
+            options: [
+              "Cluster comments by theme and suggest targeted refresher actions.",
+              "Average all comments into one sentence.",
+              "Ignore comments and rely only on attendance."
+            ],
+            answerIndex: 0
+          }
+        ]
+      },
+      {
+        id: "tl-4",
+        title: "Coaching for Performance Gaps",
+        summary:
+          "Use Copilot to build focused coaching plans and practice routines.",
+        time: "21 min",
+        mode: "Facilitated + Self-paced",
+        outcomes: [
+          "Identify behavior-level gaps from observed workflows.",
+          "Generate scenario practices aligned to specific needs.",
+          "Track coaching impact over short learning cycles."
+        ],
+        scenarios: [
+          {
+            id: "gap-diagnosis",
+            title: "Scenario 1: Diagnose root cause",
+            context:
+              "One team consistently misses escalation criteria even after training.",
+            question:
+              "Which Copilot output best supports next-step coaching?",
+            options: [
+              "A root-cause hypothesis map with observed behaviors and practice targets.",
+              "A reminder to work harder.",
+              "A generic policy summary."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "practice-design",
+            title: "Scenario 2: Practice structure",
+            context:
+              "You have 10 minutes in a huddle for skill reinforcement.",
+            question:
+              "What format should Copilot create?",
+            options: [
+              "One long lecture script.",
+              "A micro-scenario, expected responses, and debrief prompts.",
+              "No structure, open discussion only."
+            ],
+            answerIndex: 1
+          }
+        ]
+      },
+      {
+        id: "tl-5",
+        title: "Launch Readiness and Communications",
+        summary:
+          "Prepare launch messaging, manager alignment, and support plans for new initiatives.",
+        time: "18 min",
+        mode: "Virtual",
+        outcomes: [
+          "Sequence launch communication across stakeholder groups.",
+          "Draft clear callouts for frontline and manager audiences.",
+          "Build readiness checks and support channels."
+        ],
+        scenarios: [
+          {
+            id: "message-map",
+            title: "Scenario 1: Audience mapping",
+            context:
+              "A new tool release affects frontline, supervisors, and support teams differently.",
+            question:
+              "What should your Copilot communication plan include?",
+            options: [
+              "One message for all audiences to save time.",
+              "Audience-specific messages with role impact, timing, and action required.",
+              "Only a technical change log."
+            ],
+            answerIndex: 1
+          },
+          {
+            id: "readiness-check",
+            title: "Scenario 2: Go-live readiness",
+            context:
+              "Launch is tomorrow and leads need confidence checks.",
+            question:
+              "Which checklist is most practical?",
+            options: [
+              "Completion of briefing, practice scenario, support contact, and escalation path.",
+              "Just confirm everyone attended one meeting.",
+              "Skip checks and react after launch."
+            ],
+            answerIndex: 0
+          }
+        ]
       }
     ]
   },
@@ -183,7 +467,9 @@ const roleJourneys = [
     jobAids: [
       "Daily operations stand-up agenda generated from key blockers.",
       "Error-resolution prompt template for ERP/CRM task troubleshooting.",
-      "Policy-to-checklist converter prompt for compliance updates."
+      "Policy-to-checklist converter for compliance updates.",
+      "Escalation-ready summary template with impact and urgency levels.",
+      "Incident retrospective format for enablement improvements."
     ],
     modules: [
       {
@@ -191,75 +477,215 @@ const roleJourneys = [
         title: "Copilot for Workflow Accuracy",
         summary:
           "Apply Copilot to reduce ambiguity in repeat operational tasks.",
-        time: "16 min",
+        time: "18 min",
         mode: "Self-paced",
         outcomes: [
           "Build prompts that include process IDs and constraints.",
           "Generate exception handling notes.",
           "Create role-specific checklists for daily use."
         ],
-        scenario:
-          "A shipment exception appears in ERP. Use Copilot to draft a step-by-step response checklist for your role.",
-        quiz: {
-          question:
-            "What makes an operational Copilot prompt high quality?",
-          options: [
-            "It is very short and generic.",
-            "It includes process context, expected format, and constraints.",
-            "It asks for as much unrelated detail as possible."
-          ],
-          answerIndex: 1
-        }
+        scenarios: [
+          {
+            id: "prompt-precision",
+            title: "Scenario 1: Precision prompt",
+            context:
+              "A shipment exception appears in ERP and resolution steps vary by channel.",
+            question:
+              "What makes your Copilot prompt high quality for this task?",
+            options: [
+              "It includes process context, expected format, and constraints.",
+              "It is broad and asks Copilot to guess.",
+              "It asks for unrelated historical details."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "verification-step",
+            title: "Scenario 2: Verification discipline",
+            context:
+              "Copilot returns a sequence that conflicts with yesterday's documented SOP.",
+            question:
+              "What is the correct action?",
+            options: [
+              "Follow Copilot anyway to save time.",
+              "Validate against current SOP/SME guidance, then update aid if needed.",
+              "Stop using SOPs completely."
+            ],
+            answerIndex: 1
+          }
+        ]
       },
       {
         id: "oa-2",
         title: "Cross-Team Communication",
         summary:
           "Draft clear updates for store, logistics, and leadership partners.",
-        time: "12 min",
+        time: "15 min",
         mode: "Virtual",
         outcomes: [
           "Rewrite technical details for different audiences.",
           "Generate concise updates with risks and dependencies.",
           "Produce follow-up actions and owners."
         ],
-        scenario:
-          "A delayed shipment impacts three stores. Draft an update for managers and a simplified version for frontline associates.",
-        quiz: {
-          question:
-            "Why tailor Copilot output by audience?",
-          options: [
-            "Different teams need different levels of detail and action clarity.",
-            "It is only useful for executives.",
-            "Tailoring introduces unnecessary effort with no value."
-          ],
-          answerIndex: 0
-        }
+        scenarios: [
+          {
+            id: "audience-adjustment",
+            title: "Scenario 1: Audience-specific messaging",
+            context:
+              "A delayed shipment impacts three stores and one wholesale partner.",
+            question:
+              "Why tailor Copilot output by audience?",
+            options: [
+              "Different teams need different levels of detail and action clarity.",
+              "Only executives should receive updates.",
+              "Tailoring adds no operational value."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "action-clarity",
+            title: "Scenario 2: Owner clarity",
+            context:
+              "Teams report confusion because updates do not specify owners.",
+            question:
+              "What should Copilot produce in each update?",
+            options: [
+              "Owner, due time, dependency, and escalation point.",
+              "A general status statement without names.",
+              "A long appendix before action items."
+            ],
+            answerIndex: 0
+          }
+        ]
       },
       {
         id: "oa-3",
         title: "Continuous Improvement Loop",
         summary:
           "Capture lessons learned and refresh enablement assets over time.",
-        time: "15 min",
+        time: "17 min",
         mode: "Facilitated",
         outcomes: [
           "Convert incident logs into training improvements.",
           "Update job aids from recurring support trends.",
           "Prioritize next enablement topics with data."
         ],
-        scenario:
-          "After rollout, one process step causes repeat errors. Use Copilot to draft an updated micro-learning and quick reference aid.",
-        quiz: {
-          question:
-            "What is the best follow-up after repeated process errors?",
-          options: [
-            "Wait for the next quarter.",
-            "Create targeted refresher training and updated job aid immediately.",
-            "Ignore if the errors are minor."
-          ],
-          answerIndex: 1
-        }
+        scenarios: [
+          {
+            id: "error-patterns",
+            title: "Scenario 1: Pattern analysis",
+            context:
+              "One process step causes repeated errors across locations.",
+            question:
+              "What is the best Copilot-assisted response?",
+            options: [
+              "Create targeted refresher training and an updated quick-reference aid.",
+              "Wait for quarterly planning.",
+              "Assume the issue will self-correct."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "priority-ranking",
+            title: "Scenario 2: Improvement prioritization",
+            context:
+              "You have ten improvement ideas but limited enablement capacity.",
+            question:
+              "How should Copilot help rank priorities?",
+            options: [
+              "Sort by impact frequency, business risk, and implementation effort.",
+              "Pick randomly to move faster.",
+              "Prioritize the longest idea list first."
+            ],
+            answerIndex: 0
+          }
+        ]
+      },
+      {
+        id: "oa-4",
+        title: "Exception Management and Escalation",
+        summary:
+          "Use Copilot to triage incidents quickly and route escalations correctly.",
+        time: "20 min",
+        mode: "Facilitated + Virtual",
+        outcomes: [
+          "Classify incident severity with clear criteria.",
+          "Draft escalation summaries for fast decision-making.",
+          "Reduce handoff friction during high-pressure periods."
+        ],
+        scenarios: [
+          {
+            id: "severity-triage",
+            title: "Scenario 1: Severity triage",
+            context:
+              "A system issue affects order confirmations in multiple regions.",
+            question:
+              "What should Copilot include in a triage output?",
+            options: [
+              "Severity level, impacted processes, current workaround, and next checkpoint.",
+              "Only technical logs.",
+              "A high-level note with no urgency guidance."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "exec-summary",
+            title: "Scenario 2: Escalation summary",
+            context:
+              "Leadership needs a one-minute readout for action.",
+            question:
+              "Which summary structure is best?",
+            options: [
+              "Issue, impact, actions taken, decision needed, and owner.",
+              "Raw message history copied from chat.",
+              "A long narrative without decisions."
+            ],
+            answerIndex: 0
+          }
+        ]
+      },
+      {
+        id: "oa-5",
+        title: "SOP and Compliance Enablement",
+        summary:
+          "Convert policy updates into usable SOPs and micro-learning assets.",
+        time: "19 min",
+        mode: "Self-paced",
+        outcomes: [
+          "Transform policy language into role-ready SOP checklists.",
+          "Create micro-learning refreshers tied to compliance risk points.",
+          "Maintain current documentation with version clarity."
+        ],
+        scenarios: [
+          {
+            id: "policy-conversion",
+            title: "Scenario 1: Policy to SOP conversion",
+            context:
+              "A compliance update is dense and difficult for associates to apply.",
+            question:
+              "What should Copilot generate first?",
+            options: [
+              "A step-by-step SOP with role responsibilities and validation checks.",
+              "A verbatim copy of legal text.",
+              "A short motivational quote."
+            ],
+            answerIndex: 0
+          },
+          {
+            id: "version-control",
+            title: "Scenario 2: Documentation currency",
+            context:
+              "Teams are using outdated reference sheets from prior launches.",
+            question:
+              "What is the best enablement response?",
+            options: [
+              "Add version/date labels and replace old materials with a launch note.",
+              "Keep all versions visible and let teams choose.",
+              "Only update documents annually."
+            ],
+            answerIndex: 0
+          }
+        ]
       }
     ]
   }
@@ -280,10 +706,7 @@ const elements = {
   dialogTitle: document.getElementById("dialog-title"),
   dialogSummary: document.getElementById("dialog-summary"),
   dialogOutcomes: document.getElementById("dialog-outcomes"),
-  dialogScenario: document.getElementById("dialog-scenario"),
-  dialogQuestion: document.getElementById("dialog-question"),
-  dialogOptions: document.getElementById("dialog-options"),
-  dialogFeedback: document.getElementById("dialog-feedback"),
+  dialogScenarios: document.getElementById("dialog-scenarios"),
   jobAidsList: document.getElementById("job-aids-list"),
   associateName: document.getElementById("associate-name"),
   saveProfile: document.getElementById("save-profile"),
@@ -363,6 +786,31 @@ function getJourneyById(roleId) {
   return roleJourneys.find((journey) => journey.id === roleId) || roleJourneys[0];
 }
 
+function getModuleScenarios(module) {
+  if (Array.isArray(module.scenarios)) {
+    return module.scenarios;
+  }
+
+  if (module.scenario && module.quiz) {
+    return [
+      {
+        id: "legacy-check",
+        title: "Scenario challenge",
+        context: module.scenario,
+        question: module.quiz.question,
+        options: module.quiz.options,
+        answerIndex: module.quiz.answerIndex
+      }
+    ];
+  }
+
+  return [];
+}
+
+function getScenarioScoreKey(moduleId, scenarioId) {
+  return `${moduleId}::${scenarioId}`;
+}
+
 function getJourneyStats(roleId = appState.selectedRoleId) {
   const journey = getJourneyById(roleId);
   const total = journey.modules.length;
@@ -372,7 +820,11 @@ function getJourneyStats(roleId = appState.selectedRoleId) {
   const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
 
   const scores = journey.modules
-    .map((module) => appState.quizScores[module.id])
+    .flatMap((module) =>
+      getModuleScenarios(module).map((scenario) =>
+        appState.quizScores[getScenarioScoreKey(module.id, scenario.id)]
+      )
+    )
     .filter((score) => typeof score === "number");
   const quizAverage = scores.length
     ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
@@ -419,8 +871,8 @@ function markModuleComplete(moduleId) {
   render();
 }
 
-function updateQuizScore(moduleId, score) {
-  appState.quizScores[moduleId] = score;
+function updateQuizScore(moduleId, scenarioId, score) {
+  appState.quizScores[getScenarioScoreKey(moduleId, scenarioId)] = score;
   saveState();
   syncCurrentLearnerRecord();
   updateStats();
@@ -477,12 +929,9 @@ function renderJobAids() {
 }
 
 function openModuleDialog(module) {
+  const scenarios = getModuleScenarios(module);
   elements.dialogTitle.textContent = module.title;
   elements.dialogSummary.textContent = module.summary;
-  elements.dialogScenario.textContent = module.scenario;
-  elements.dialogQuestion.textContent = module.quiz.question;
-  elements.dialogFeedback.textContent = "";
-  elements.dialogFeedback.className = "feedback";
 
   elements.dialogOutcomes.innerHTML = "";
   module.outcomes.forEach((outcome) => {
@@ -491,19 +940,60 @@ function openModuleDialog(module) {
     elements.dialogOutcomes.appendChild(li);
   });
 
-  elements.dialogOptions.innerHTML = "";
-  module.quiz.options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.textContent = option;
-    button.addEventListener("click", () => {
-      const correct = index === module.quiz.answerIndex;
-      elements.dialogFeedback.textContent = correct
-        ? "Correct. Great workflow-focused choice."
-        : "Not quite. Review the scenario and try again.";
-      elements.dialogFeedback.className = `feedback ${correct ? "good" : "bad"}`;
-      updateQuizScore(module.id, correct ? 100 : 0);
+  elements.dialogScenarios.innerHTML = "";
+
+  scenarios.forEach((scenario, scenarioIndex) => {
+    const container = document.createElement("article");
+    container.className = "scenario-card";
+
+    const title = document.createElement("p");
+    title.className = "scenario-title";
+    title.textContent = scenario.title || `Scenario ${scenarioIndex + 1}`;
+    container.appendChild(title);
+
+    const context = document.createElement("p");
+    context.className = "scenario-context";
+    context.textContent = scenario.context;
+    container.appendChild(context);
+
+    const question = document.createElement("p");
+    question.className = "scenario-question";
+    question.textContent = scenario.question;
+    container.appendChild(question);
+
+    const options = document.createElement("div");
+    options.className = "button-group stacked";
+
+    const feedback = document.createElement("p");
+    feedback.className = "feedback";
+
+    const existingScore =
+      appState.quizScores[getScenarioScoreKey(module.id, scenario.id)];
+    if (existingScore === 100) {
+      feedback.textContent = "Previously answered correctly.";
+      feedback.className = "feedback good";
+    } else if (existingScore === 0) {
+      feedback.textContent = "Previously answered incorrectly. Try again.";
+      feedback.className = "feedback bad";
+    }
+
+    scenario.options.forEach((option, optionIndex) => {
+      const button = document.createElement("button");
+      button.textContent = option;
+      button.addEventListener("click", () => {
+        const correct = optionIndex === scenario.answerIndex;
+        feedback.textContent = correct
+          ? "Correct. Great workflow-focused choice."
+          : "Not quite. Review the scenario and try again.";
+        feedback.className = `feedback ${correct ? "good" : "bad"}`;
+        updateQuizScore(module.id, scenario.id, correct ? 100 : 0);
+      });
+      options.appendChild(button);
     });
-    elements.dialogOptions.appendChild(button);
+
+    container.appendChild(options);
+    container.appendChild(feedback);
+    elements.dialogScenarios.appendChild(container);
   });
 
   elements.moduleDialog.showModal();
@@ -520,13 +1010,21 @@ function renderModules() {
     const summary = fragment.querySelector(".module-summary");
     const time = fragment.querySelector(".module-time");
     const mode = fragment.querySelector(".module-mode");
+    const metaRow = fragment.querySelector(".meta-row");
     const detailsButton = fragment.querySelector(".details-btn");
     const completeButton = fragment.querySelector(".complete-btn");
+    const scenarioCount = getModuleScenarios(module).length;
 
     title.textContent = module.title;
     summary.textContent = module.summary;
     time.textContent = module.time;
     mode.textContent = module.mode;
+    if (scenarioCount > 0) {
+      const scenarioPill = document.createElement("span");
+      scenarioPill.className = "pill";
+      scenarioPill.textContent = `${scenarioCount} scenarios`;
+      metaRow.appendChild(scenarioPill);
+    }
 
     if (moduleIsComplete(module.id)) {
       container.classList.add("completed");
