@@ -286,10 +286,16 @@ const elements = {
   dialogFeedback: document.getElementById("dialog-feedback"),
   jobAidsList: document.getElementById("job-aids-list"),
   associateName: document.getElementById("associate-name"),
-  saveProfile: document.getElementById("save-profile")
+  saveProfile: document.getElementById("save-profile"),
+  downloadCertificate: document.getElementById("download-certificate"),
+  managerLearners: document.getElementById("manager-learners"),
+  managerCompletion: document.getElementById("manager-completion"),
+  managerCompleted: document.getElementById("manager-completed"),
+  managerTableBody: document.getElementById("manager-table-body")
 };
 
 const storageKey = "copilot-lms-state";
+const learnerRecordsKey = "copilot-lms-learners";
 
 const defaultState = {
   associateName: "",
@@ -299,6 +305,7 @@ const defaultState = {
 };
 
 let appState = loadState();
+let learnerRecords = loadLearnerRecords();
 
 function loadState() {
   const raw = localStorage.getItem(storageKey);
@@ -323,6 +330,24 @@ function saveState() {
   localStorage.setItem(storageKey, JSON.stringify(appState));
 }
 
+function loadLearnerRecords() {
+  const raw = localStorage.getItem(learnerRecordsKey);
+  if (!raw) {
+    return {};
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    return typeof parsed === "object" && parsed !== null ? parsed : {};
+  } catch (_error) {
+    return {};
+  }
+}
+
+function saveLearnerRecords() {
+  localStorage.setItem(learnerRecordsKey, JSON.stringify(learnerRecords));
+}
+
 function getCurrentJourney() {
   return (
     roleJourneys.find((journey) => journey.id === appState.selectedRoleId) ||
@@ -334,45 +359,90 @@ function moduleIsComplete(moduleId) {
   return Boolean(appState.completedModules[moduleId]);
 }
 
+function getJourneyById(roleId) {
+  return roleJourneys.find((journey) => journey.id === roleId) || roleJourneys[0];
+}
+
+function getJourneyStats(roleId = appState.selectedRoleId) {
+  const journey = getJourneyById(roleId);
+  const total = journey.modules.length;
+  const completed = journey.modules.filter((module) =>
+    Boolean(appState.completedModules[module.id])
+  ).length;
+  const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+  const scores = journey.modules
+    .map((module) => appState.quizScores[module.id])
+    .filter((score) => typeof score === "number");
+  const quizAverage = scores.length
+    ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
+    : 0;
+
+  return { journey, total, completed, progress, quizAverage };
+}
+
+function normalizeName(value) {
+  return value.trim().toLowerCase();
+}
+
+function buildLearnerRecordKey(name, roleId) {
+  return `${normalizeName(name)}::${roleId}`;
+}
+
+function syncCurrentLearnerRecord() {
+  const associateName = appState.associateName.trim();
+  if (!associateName) {
+    return;
+  }
+
+  const stats = getJourneyStats(appState.selectedRoleId);
+  const key = buildLearnerRecordKey(associateName, appState.selectedRoleId);
+
+  learnerRecords[key] = {
+    associateName,
+    roleId: appState.selectedRoleId,
+    roleTitle: stats.journey.title.replace(" Journey", ""),
+    completed: stats.completed,
+    total: stats.total,
+    progress: stats.progress,
+    quizAverage: stats.quizAverage,
+    lastUpdated: new Date().toISOString()
+  };
+
+  saveLearnerRecords();
+}
+
 function markModuleComplete(moduleId) {
   appState.completedModules[moduleId] = true;
   saveState();
+  syncCurrentLearnerRecord();
   render();
 }
 
 function updateQuizScore(moduleId, score) {
   appState.quizScores[moduleId] = score;
   saveState();
+  syncCurrentLearnerRecord();
   updateStats();
-}
-
-function calcQuizAverage() {
-  const currentJourney = getCurrentJourney();
-  const scores = currentJourney.modules
-    .map((module) => appState.quizScores[module.id])
-    .filter((score) => typeof score === "number");
-
-  if (scores.length === 0) {
-    return 0;
-  }
-
-  const total = scores.reduce((sum, score) => sum + score, 0);
-  return Math.round(total / scores.length);
+  renderManagerDashboard();
 }
 
 function updateStats() {
-  const currentJourney = getCurrentJourney();
-  const total = currentJourney.modules.length;
-  const completed = currentJourney.modules.filter((module) =>
-    moduleIsComplete(module.id)
-  ).length;
-  const progress = Math.round((completed / total) * 100);
+  const currentStats = getJourneyStats();
 
-  elements.completedCount.textContent = `${completed} / ${total}`;
-  elements.progressPercent.textContent = `${progress}%`;
-  elements.quizAverage.textContent = `${calcQuizAverage()}%`;
+  elements.completedCount.textContent = `${currentStats.completed} / ${currentStats.total}`;
+  elements.progressPercent.textContent = `${currentStats.progress}%`;
+  elements.quizAverage.textContent = `${currentStats.quizAverage}%`;
   elements.badgeStatus.textContent =
-    progress === 100 ? "Journey Complete" : progress > 0 ? "In Progress" : "Not Started";
+    currentStats.progress === 100
+      ? "Journey Complete"
+      : currentStats.progress > 0
+        ? "In Progress"
+        : "Not Started";
+
+  const canDownload =
+    currentStats.progress === 100 && appState.associateName.trim().length > 0;
+  elements.downloadCertificate.disabled = !canDownload;
 }
 
 function renderRoleButtons() {
@@ -386,6 +456,7 @@ function renderRoleButtons() {
     }
     button.textContent = journey.title.replace(" Journey", "");
     button.addEventListener("click", () => {
+      syncCurrentLearnerRecord();
       appState.selectedRoleId = journey.id;
       saveState();
       render();
@@ -477,12 +548,156 @@ function renderHeader() {
   elements.associateName.value = appState.associateName;
 }
 
+function formatTimestamp(timestamp) {
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) {
+    return "Unknown";
+  }
+
+  return date.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  });
+}
+
+function renderManagerDashboard() {
+  const records = Object.values(learnerRecords).sort((a, b) =>
+    b.lastUpdated.localeCompare(a.lastUpdated)
+  );
+
+  const totalLearners = records.length;
+  const avgCompletion = totalLearners
+    ? Math.round(
+      records.reduce((sum, record) => sum + record.progress, 0) / totalLearners
+    )
+    : 0;
+  const completedJourneys = records.filter((record) => record.progress === 100).length;
+
+  elements.managerLearners.textContent = `${totalLearners}`;
+  elements.managerCompletion.textContent = `${avgCompletion}%`;
+  elements.managerCompleted.textContent = `${completedJourneys}`;
+
+  elements.managerTableBody.innerHTML = "";
+
+  if (records.length === 0) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 5;
+    cell.textContent = "No learner records yet. Save profiles and complete modules to populate this report.";
+    row.appendChild(cell);
+    elements.managerTableBody.appendChild(row);
+    return;
+  }
+
+  records.forEach((record) => {
+    const row = document.createElement("tr");
+
+    const associateCell = document.createElement("td");
+    associateCell.textContent = record.associateName;
+    row.appendChild(associateCell);
+
+    const roleCell = document.createElement("td");
+    roleCell.textContent = record.roleTitle;
+    row.appendChild(roleCell);
+
+    const progressCell = document.createElement("td");
+    progressCell.textContent = `${record.progress}% (${record.completed}/${record.total})`;
+    row.appendChild(progressCell);
+
+    const quizCell = document.createElement("td");
+    quizCell.textContent = `${record.quizAverage}%`;
+    row.appendChild(quizCell);
+
+    const updatedCell = document.createElement("td");
+    updatedCell.textContent = formatTimestamp(record.lastUpdated);
+    row.appendChild(updatedCell);
+
+    elements.managerTableBody.appendChild(row);
+  });
+}
+
+function escapeXml(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll("\"", "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+function slugify(value) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function downloadCertificate() {
+  const stats = getJourneyStats();
+  const associateName = appState.associateName.trim();
+
+  if (!associateName || stats.progress < 100) {
+    return;
+  }
+
+  const roleLabel = stats.journey.title.replace(" Journey", "");
+  const issuedOn = new Date();
+  const issuedLabel = issuedOn.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+  const certId = `CC-${issuedOn.getTime().toString().slice(-8)}`;
+
+  const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7fbff" />
+      <stop offset="100%" stop-color="#edf3ff" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1400" height="1000" fill="url(#bg)" />
+  <rect x="45" y="45" width="1310" height="910" fill="none" stroke="#16385f" stroke-width="4" />
+  <rect x="70" y="70" width="1260" height="860" fill="none" stroke="#7f95b6" stroke-width="2" />
+  <text x="700" y="180" text-anchor="middle" font-size="28" fill="#2b4365" font-family="Arial">Copilot Coach LMS</text>
+  <text x="700" y="260" text-anchor="middle" font-size="54" fill="#122840" font-weight="700" font-family="Arial">Certificate of Completion</text>
+  <text x="700" y="355" text-anchor="middle" font-size="28" fill="#2f4f77" font-family="Arial">This certifies that</text>
+  <text x="700" y="440" text-anchor="middle" font-size="64" fill="#0b2746" font-weight="700" font-family="Arial">${escapeXml(associateName)}</text>
+  <line x1="340" y1="460" x2="1060" y2="460" stroke="#7f95b6" stroke-width="2" />
+  <text x="700" y="545" text-anchor="middle" font-size="29" fill="#2f4f77" font-family="Arial">has successfully completed the role-based journey</text>
+  <text x="700" y="610" text-anchor="middle" font-size="40" fill="#16385f" font-weight="700" font-family="Arial">${escapeXml(roleLabel)}</text>
+  <text x="700" y="665" text-anchor="middle" font-size="24" fill="#2f4f77" font-family="Arial">Microsoft Copilot Associate Enablement Program</text>
+  <text x="220" y="810" font-size="22" fill="#233f5f" font-family="Arial">Issued: ${escapeXml(issuedLabel)}</text>
+  <text x="220" y="860" font-size="22" fill="#233f5f" font-family="Arial">Certificate ID: ${escapeXml(certId)}</text>
+  <text x="1025" y="810" text-anchor="middle" font-size="22" fill="#233f5f" font-family="Arial">Training &amp; Enablement</text>
+  <line x1="900" y1="825" x2="1150" y2="825" stroke="#6b87ad" stroke-width="2" />
+  <text x="1025" y="860" text-anchor="middle" font-size="18" fill="#46638a" font-family="Arial">Copilot Coach Program Lead</text>
+</svg>`;
+
+  const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const fileName = `copilot-certificate-${slugify(associateName)}-${stats.journey.id}.svg`;
+
+  link.href = url;
+  link.download = fileName;
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
 function render() {
   renderHeader();
   renderRoleButtons();
   renderJobAids();
   renderModules();
   updateStats();
+  renderManagerDashboard();
 }
 
 elements.closeDialog.addEventListener("click", () => {
@@ -492,7 +707,10 @@ elements.closeDialog.addEventListener("click", () => {
 elements.saveProfile.addEventListener("click", () => {
   appState.associateName = elements.associateName.value.trim();
   saveState();
+  syncCurrentLearnerRecord();
   render();
 });
+
+elements.downloadCertificate.addEventListener("click", downloadCertificate);
 
 render();

@@ -58,9 +58,53 @@
               <h2 id="journey-title">Learning Journey</h2>
               <p id="journey-description" class="muted"></p>
             </div>
-            <span id="badge-status" class="badge">Not Started</span>
+            <div class="journey-actions">
+              <span id="badge-status" class="badge">Not Started</span>
+              <button id="download-certificate" class="certificate-btn" disabled>
+                Download Certificate
+              </button>
+            </div>
           </div>
           <div id="module-list" class="module-list"></div>
+        </article>
+
+        <article class="card manager-dashboard">
+          <div class="section-heading">
+            <div>
+              <h2>Manager Dashboard</h2>
+              <p class="muted">
+                Team-level progress snapshots captured from saved learner profiles.
+              </p>
+            </div>
+          </div>
+          <div class="stats-grid manager-stats">
+            <article class="card stat">
+              <p class="muted">Associates Tracked</p>
+              <h3 id="manager-learners">0</h3>
+            </article>
+            <article class="card stat">
+              <p class="muted">Avg Completion</p>
+              <h3 id="manager-completion">0%</h3>
+            </article>
+            <article class="card stat">
+              <p class="muted">Journeys Completed</p>
+              <h3 id="manager-completed">0</h3>
+            </article>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Associate</th>
+                  <th>Role</th>
+                  <th>Progress</th>
+                  <th>Quiz Avg</th>
+                  <th>Last Updated</th>
+                </tr>
+              </thead>
+              <tbody id="manager-table-body"></tbody>
+            </table>
+          </div>
         </article>
       </section>
     </main>

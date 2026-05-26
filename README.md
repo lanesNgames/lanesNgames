@@ -22,6 +22,12 @@ This prototype demonstrates initiative for a Training & Enablement-style role by
   - modules completed
   - journey progress
   - average knowledge check score
+- **Downloadable completion certificate** (SVG) unlocked when a named associate completes a journey
+- **Manager dashboard** with:
+  - associates tracked
+  - average completion percentage
+  - completed journey count
+  - learner-level reporting table (role, progress, quiz average, and last update)
 - **Local persistence** using browser `localStorage` for profile, completion, and quiz outcomes
 
 ## Run locally
@@ -40,7 +46,6 @@ No build step required.
 
 ## Future extensions
 
-- Manager dashboard for team-level reporting
-- Certificate generation for completed journeys
+- Manager export (CSV) for quarterly reporting
 - Integration with Microsoft Graph and Copilot usage telemetry
 - SCORM/xAPI export compatibility for enterprise LMS systems
