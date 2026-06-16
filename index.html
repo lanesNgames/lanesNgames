@@ -3,175 +3,241 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Copilot Coach | Associate LMS</title>
+    <title>Forecast Trail | Gamified Enablement</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">Training &amp; Enablement Prototype</p>
-        <h1>Copilot Coach for Associates</h1>
-      </div>
-      <div class="header-actions">
-        <label class="inline-field" for="associate-name">
-          Associate
-          <input id="associate-name" type="text" placeholder="Enter your name" />
-        </label>
-        <button id="save-profile">Save Profile</button>
-      </div>
+    <header class="hero">
+      <nav class="topbar" aria-label="Primary">
+        <div class="brand-mark" aria-hidden="true">NB</div>
+        <a href="#trail">Trail</a>
+        <a href="#campfire">Campfire</a>
+        <a href="#metrics">Metrics</a>
+      </nav>
+
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Forecast Trail Enablement Expedition</p>
+          <h1>Guide every budget traveler to the same standard process.</h1>
+          <p class="hero-text">
+            An Oregon Trail-inspired training site for teams adopting the
+            forecasting and budgeting platform after an uneven rollout.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#trail">Start the trail</a>
+            <a class="secondary-link" href="#metrics">View measurement plan</a>
+          </div>
+        </div>
+        <aside class="wagon-card" aria-label="Wagon status">
+          <div class="pixel-sky" aria-hidden="true">
+            <span class="sun"></span>
+            <span class="mountain mountain-a"></span>
+            <span class="mountain mountain-b"></span>
+            <span class="wagon">▰▰</span>
+          </div>
+          <h2>Wagon Readiness</h2>
+          <p>
+            Replace scattered habits with guided practice, checkpoints, and
+            manager reinforcement.
+          </p>
+        </aside>
+      </section>
     </header>
 
-    <main class="layout">
-      <aside class="card side-panel">
-        <section>
-          <h2>Role-Based Journey</h2>
-          <p class="muted">
-            Pick your role to load workflows, scenarios, and practical job aids.
-          </p>
-          <div id="role-buttons" class="button-group"></div>
-        </section>
-        <section class="job-aids">
-          <h3>Quick Job Aids</h3>
-          <ul id="job-aids-list"></ul>
-        </section>
-      </aside>
+    <main>
+      <section class="intro-panel" aria-labelledby="assignment-heading">
+        <div>
+          <p class="eyebrow dark">Assignment translation</p>
+          <h2 id="assignment-heading">From rollout confusion to repeatable behavior</h2>
+        </div>
+        <div class="problem-grid">
+          <article>
+            <span>1</span>
+            <h3>No official go-live</h3>
+            <p>Use the trail launch as a shared milestone and reset moment.</p>
+          </article>
+          <article>
+            <span>2</span>
+            <h3>Teams use it differently</h3>
+            <p>Teach one standard route with role-specific practice branches.</p>
+          </article>
+          <article>
+            <span>3</span>
+            <h3>Mistakes cause budget issues</h3>
+            <p>Make accuracy, handoffs, and exception handling core challenges.</p>
+          </article>
+          <article>
+            <span>4</span>
+            <h3>Adoption is low</h3>
+            <p>Reward meaningful behavior, not passive content completion.</p>
+          </article>
+        </div>
+      </section>
 
-      <section class="content">
-        <div class="stats-grid">
-          <article class="card stat">
-            <p class="muted">Modules Completed</p>
-            <h3 id="completed-count">0 / 0</h3>
+      <section id="trail" class="trail-layout">
+        <aside class="trail-sidebar card">
+          <h2>Trail Passport</h2>
+          <label for="traveler-name">Traveler name</label>
+          <input id="traveler-name" type="text" placeholder="Name your traveler" />
+
+          <label for="traveler-role">Wagon role</label>
+          <select id="traveler-role">
+            <option value="planner">Forecast Planner</option>
+            <option value="owner">Budget Owner</option>
+            <option value="approver">Approver</option>
+            <option value="leader">Team Leader</option>
+          </select>
+
+          <button id="save-passport" type="button">Stamp passport</button>
+          <p id="passport-feedback" class="microcopy" aria-live="polite"></p>
+
+          <div class="supply-grid" aria-label="Trail supplies">
+            <article>
+              <span id="supply-confidence">40</span>
+              <p>Confidence</p>
+            </article>
+            <article>
+              <span id="supply-accuracy">30</span>
+              <p>Accuracy</p>
+            </article>
+            <article>
+              <span id="supply-standard">25</span>
+              <p>Process adherence</p>
+            </article>
+            <article>
+              <span id="supply-support">35</span>
+              <p>Peer support</p>
+            </article>
+          </div>
+        </aside>
+
+        <section class="trail-main">
+          <div class="trail-status card">
+            <div>
+              <p class="eyebrow dark">Expedition progress</p>
+              <h2 id="progress-title">0 of 5 trail stops complete</h2>
+            </div>
+            <div class="progress-ring" aria-label="Progress percentage">
+              <span id="progress-percent">0%</span>
+            </div>
+          </div>
+
+          <div class="trail-map" aria-label="Training trail map">
+            <div class="trail-line" aria-hidden="true"></div>
+            <div id="trail-stop-list" class="trail-stop-list"></div>
+          </div>
+        </section>
+      </section>
+
+      <section id="campfire" class="campfire card">
+        <div>
+          <p class="eyebrow dark">Reinforcement over time</p>
+          <h2>Campfire habits after the trail</h2>
+          <p>
+            Managers keep the behavior alive with short routines that happen in
+            the flow of work, not one-off retraining.
+          </p>
+        </div>
+        <div class="campfire-grid">
+          <article>
+            <h3>Day 1 trail huddle</h3>
+            <p>Run one 10-minute scenario using last cycle's forecast miss.</p>
           </article>
-          <article class="card stat">
-            <p class="muted">Journey Progress</p>
-            <h3 id="progress-percent">0%</h3>
+          <article>
+            <h3>Week 2 ranger check</h3>
+            <p>Compare actual entries to the standard process checklist.</p>
           </article>
-          <article class="card stat">
-            <p class="muted">Knowledge Check Avg</p>
-            <h3 id="quiz-average">0%</h3>
+          <article>
+            <h3>Monthly wagon council</h3>
+            <p>Review errors, coaching themes, and champions by team.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="metrics" class="metrics-section">
+        <div class="metrics-heading">
+          <p class="eyebrow dark">Engagement and behavior change</p>
+          <h2>Measurement dashboard</h2>
+          <p>
+            The site records local prototype signals and shows how a production
+            rollout would measure adoption beyond attendance.
+          </p>
+        </div>
+
+        <div class="metrics-grid">
+          <article class="card metric">
+            <span id="metric-completion">0%</span>
+            <h3>Engagement</h3>
+            <p>Trail completion, scenario attempts, and revisit activity.</p>
+          </article>
+          <article class="card metric">
+            <span id="metric-decision">0%</span>
+            <h3>Decision quality</h3>
+            <p>Correct choices in realistic forecast and budget challenges.</p>
+          </article>
+          <article class="card metric">
+            <span id="metric-behavior">0%</span>
+            <h3>Behavior change</h3>
+            <p>Standard-process choices plus confidence and adherence gains.</p>
+          </article>
+          <article class="card metric">
+            <span id="metric-risk">High</span>
+            <h3>Adoption risk</h3>
+            <p>Flags low confidence, incorrect choices, or stalled progress.</p>
           </article>
         </div>
 
-        <article class="card journey">
-          <div class="section-heading">
-            <div>
-              <h2 id="journey-title">Learning Journey</h2>
-              <p id="journey-description" class="muted"></p>
-              <p class="unlock-note muted">
-                Unlock path: pass each module scenarios, then mark complete to open the next module.
-              </p>
-            </div>
-            <div class="journey-actions">
-              <span id="badge-status" class="badge">Not Started</span>
-              <button id="download-certificate" class="certificate-btn" disabled>
-                Download Certificate
-              </button>
-            </div>
-          </div>
-          <div id="module-list" class="module-list"></div>
-        </article>
-
-        <article class="card manager-dashboard">
-          <div class="section-heading">
-            <div>
-              <h2>Manager Dashboard</h2>
-              <p class="muted">
-                Team-level progress snapshots captured from saved learner profiles.
-              </p>
-            </div>
-          </div>
-          <div class="stats-grid manager-stats">
-            <article class="card stat">
-              <p class="muted">Associates Tracked</p>
-              <h3 id="manager-learners">0</h3>
+        <div class="card measurement-plan">
+          <h3>Success measures for leaders</h3>
+          <div class="measure-columns">
+            <article>
+              <h4>Leading indicators</h4>
+              <ul>
+                <li>80% of target users complete the trail stops.</li>
+                <li>Scenario retry rate drops after reinforcement huddles.</li>
+                <li>Confidence and adherence scores improve by role.</li>
+              </ul>
             </article>
-            <article class="card stat">
-              <p class="muted">Avg Completion</p>
-              <h3 id="manager-completion">0%</h3>
+            <article>
+              <h4>Behavior indicators</h4>
+              <ul>
+                <li>Forecast submissions follow the standard sequence.</li>
+                <li>Budget owners document assumptions before approval.</li>
+                <li>Exception handling uses the shared escalation path.</li>
+              </ul>
             </article>
-            <article class="card stat">
-              <p class="muted">Journeys Completed</p>
-              <h3 id="manager-completed">0</h3>
-            </article>
-            <article class="card stat">
-              <p class="muted">At-Risk Learners</p>
-              <h3 id="manager-at-risk">0</h3>
+            <article>
+              <h4>Business indicators</h4>
+              <ul>
+                <li>Fewer budget rework cycles and correction tickets.</li>
+                <li>Reduced variance caused by process misses.</li>
+                <li>Higher manager confidence in cycle readiness.</li>
+              </ul>
             </article>
           </div>
-          <p class="muted risk-criteria">
-            At-risk criteria: quiz average below 70% or no progress updates for 7+ days before completion.
-          </p>
-          <div class="manager-controls">
-            <label class="inline-field manager-field" for="manager-filter">
-              Filter Learners
-              <select id="manager-filter">
-                <option value="all">All</option>
-                <option value="at-risk">At Risk</option>
-                <option value="on-track">On Track</option>
-              </select>
-            </label>
-            <label class="inline-field manager-field" for="manager-sort">
-              Sort By
-              <select id="manager-sort">
-                <option value="risk-desc">Highest Risk First</option>
-                <option value="stale-desc">Oldest Update First</option>
-                <option value="quiz-asc">Lowest Quiz First</option>
-                <option value="progress-asc">Lowest Progress First</option>
-                <option value="updated-desc">Most Recent Update</option>
-              </select>
-            </label>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Associate</th>
-                  <th>Role</th>
-                  <th>Progress</th>
-                  <th>Quiz Avg</th>
-                  <th>Risk Status</th>
-                  <th>Last Updated</th>
-                </tr>
-              </thead>
-              <tbody id="manager-table-body"></tbody>
-            </table>
-          </div>
-        </article>
+        </div>
       </section>
     </main>
 
-    <template id="module-template">
-      <article class="module-item">
-        <div class="module-main">
-          <h3 class="module-title"></h3>
-          <p class="module-summary"></p>
-          <p class="module-status muted"></p>
-          <div class="meta-row">
-            <span class="pill module-time"></span>
-            <span class="pill module-mode"></span>
-          </div>
-        </div>
-        <div class="module-actions">
-          <button class="details-btn">View</button>
-          <button class="complete-btn">Mark Complete</button>
-        </div>
-      </article>
-    </template>
-
-    <dialog id="module-dialog">
+    <dialog id="stop-dialog">
       <article class="dialog-card">
-        <header class="section-heading">
-          <h3 id="dialog-title"></h3>
-          <button id="close-dialog" class="ghost-btn">Close</button>
+        <header>
+          <div>
+            <p id="dialog-kicker" class="eyebrow dark"></p>
+            <h2 id="dialog-title"></h2>
+          </div>
+          <button id="close-dialog" class="ghost-button" type="button">Close</button>
         </header>
         <p id="dialog-summary"></p>
         <section>
-          <h4>What you will practice</h4>
-          <ul id="dialog-outcomes"></ul>
+          <h3>Trail lesson</h3>
+          <ul id="dialog-lessons"></ul>
         </section>
         <section>
-          <h4>Scenario challenges</h4>
-          <div id="dialog-scenarios" class="scenario-list"></div>
+          <h3>Choose your route</h3>
+          <p id="dialog-scenario" class="scenario-text"></p>
+          <div id="dialog-options" class="option-list"></div>
+          <p id="choice-feedback" class="choice-feedback" aria-live="polite"></p>
         </section>
       </article>
     </dialog>

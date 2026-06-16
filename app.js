@@ -1,764 +1,275 @@
-const roleJourneys = [
+const trailStops = [
   {
-    id: "store-associate",
-    title: "Store Associate Journey",
-    description:
-      "Build confidence using Microsoft Copilot for customer conversations, product knowledge, and faster daily execution.",
-    jobAids: [
-      "Copilot prompt starter: customer profile + activity + weather + budget.",
-      "2-minute product comparison prompt for in-store recommendations.",
-      "Shift handoff template: wins, missed opportunities, follow-up tasks.",
-      "Returns conversation script generator with policy-safe language.",
-      "Opening and closing checklist simplifier for quick huddles."
+    id: "trailhead",
+    icon: "1",
+    title: "Trailhead: Reset the Launch",
+    duration: "8 min",
+    badge: "Go-live clarity",
+    summary:
+      "Create a shared starting point for a tool that rolled out without a clear launch moment.",
+    lessons: [
+      "Explain why the reset matters: budget errors, inconsistent work, and low confidence.",
+      "Name the standard process as the safest route through the forecast cycle.",
+      "Invite learners to choose one role-specific behavior they will practice this week."
     ],
-    modules: [
+    scenario:
+      "Your team says, 'We already started using the tool months ago, so why are we launching training now?'",
+    options: [
       {
-        id: "sa-1",
-        title: "Copilot Basics for Frontline Work",
-        summary:
-          "Learn safe, practical prompts and when to use Copilot during a shift.",
-        time: "18 min",
-        mode: "Virtual",
-        level: "Foundational",
-        outcomes: [
-          "Use context-rich prompts that include intent, audience, and constraints.",
-          "Recognize when to verify Copilot output before sharing with customers.",
-          "Save reusable prompts for repeat workflows."
-        ],
-        scenarios: [
-          {
-            id: "prompt-quality",
-            title: "Scenario 1: Product recommendation prompt",
-            context:
-              "A customer is training for a half marathon and has mild overpronation. They also want something for wet-weather runs.",
-            question:
-              "Which prompt is most likely to produce a useful, role-specific recommendation script?",
-            options: [
-              "Tell me about running shoes.",
-              "Create a concise recommendation script for a half-marathon runner with mild overpronation and rainy-weather needs. Include 3 options and one follow-up question to ask.",
-              "What is your favorite shoe?"
-            ],
-            answerIndex: 1
-          },
-          {
-            id: "safe-use",
-            title: "Scenario 2: Verification in the flow of work",
-            context:
-              "Copilot gives a product feature claim you have not seen on the floor card.",
-            question:
-              "What is the best next step before using that claim with a customer?",
-            options: [
-              "Share it immediately to move the sale forward.",
-              "Check trusted product sources or a manager, then use verified wording.",
-              "Ignore Copilot forever."
-            ],
-            answerIndex: 1
-          }
-        ]
+        label:
+          "Frame the trail as a reset: same tool, now one standard route with coaching and checkpoints.",
+        correct: true,
+        supplies: { confidence: 12, standard: 12, support: 6 },
+        feedback:
+          "Correct. Adults need the reason, the standard, and the support path before they change habits."
       },
       {
-        id: "sa-2",
-        title: "Scenario Practice: Customer Dialogues",
-        summary:
-          "Use scenario-based prompts to prepare for common sales floor interactions.",
-        time: "22 min",
-        mode: "Virtual + In-person",
-        level: "Foundational",
-        outcomes: [
-          "Generate role-play scripts for difficult customer interactions.",
-          "Use Copilot to simplify technical product details.",
-          "Adapt tone for first-time versus experienced athletes."
-        ],
-        scenarios: [
-          {
-            id: "tone-switch",
-            title: "Scenario 1: Tone adaptation",
-            context:
-              "You need two scripts: one for a first-time runner and one for an experienced runner comparing cushioning technologies.",
-            question:
-              "Why is asking Copilot for audience-specific scripts valuable?",
-            options: [
-              "It helps tailor complexity and language to customer needs.",
-              "It removes the need to listen to customers.",
-              "It guarantees every customer wants the same recommendation."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "objection-handling",
-            title: "Scenario 2: Handling price objection",
-            context:
-              "A customer likes the recommended shoe but says the price feels high.",
-            question:
-              "What should your Copilot prompt include to generate a strong response script?",
-            options: [
-              "Only ask for a discount script.",
-              "Ask for value framing, alternatives at lower price, and one clarifying question.",
-              "Ask Copilot to pressure the customer."
-            ],
-            answerIndex: 1
-          }
-        ]
+        label: "Tell the team to read the old rollout emails and move on.",
+        correct: false,
+        supplies: { confidence: -8, support: -6 },
+        feedback:
+          "That keeps the old confusion alive. The reset needs a clear purpose and visible leader support."
       },
       {
-        id: "sa-3",
-        title: "In-the-Flow Job Aids",
-        summary:
-          "Create quick reference assets and shift support content with Copilot.",
-        time: "16 min",
-        mode: "Self-paced",
-        level: "Intermediate",
-        outcomes: [
-          "Turn policy notes into one-page job aids.",
-          "Draft shift recap templates for team handoff.",
-          "Build reusable prompts for repetitive tasks."
-        ],
-        scenarios: [
-          {
-            id: "job-aid-format",
-            title: "Scenario 1: Checklist quality",
-            context:
-              "Inventory process changed this week and teammates are missing a key step during closing.",
-            question:
-              "Which job aid format works best during a busy shift?",
-            options: [
-              "A long narrative explaining every edge case first.",
-              "A short checklist with steps, owners, and escalation notes.",
-              "A memo with no sequence."
-            ],
-            answerIndex: 1
-          },
-          {
-            id: "handoff-consistency",
-            title: "Scenario 2: Shift handoff consistency",
-            context:
-              "Different associates give uneven handoff notes, causing confusion for morning teams.",
-            question:
-              "What should Copilot generate to improve consistency?",
-            options: [
-              "A standardized handoff template with required fields.",
-              "No written notes; rely on memory.",
-              "A single sentence recap regardless of issues."
-            ],
-            answerIndex: 0
-          }
-        ]
-      },
-      {
-        id: "sa-4",
-        title: "Merchandising and Floor Readiness",
-        summary:
-          "Use Copilot to plan floor priorities, signage language, and recovery tasks.",
-        time: "20 min",
-        mode: "Facilitated",
-        level: "Intermediate",
-        outcomes: [
-          "Prioritize merchandising tasks based on traffic patterns.",
-          "Draft concise, customer-friendly signage text.",
-          "Build task blocks for floor recovery under time constraints."
-        ],
-        scenarios: [
-          {
-            id: "priority-order",
-            title: "Scenario 1: Recovery priorities",
-            context:
-              "You have 30 minutes before peak traffic and several zones need recovery.",
-            question:
-              "Which Copilot output is most useful for immediate execution?",
-            options: [
-              "A ranked task list with estimated minutes and owner suggestions.",
-              "A full history of all past floor changes.",
-              "A generic paragraph about merchandising."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "signage-clarity",
-            title: "Scenario 2: Signage rewrite",
-            context:
-              "Current signage is too technical for first-time customers.",
-            question:
-              "What should you ask Copilot to optimize?",
-            options: [
-              "Use shorter wording, benefits-first phrasing, and plain language.",
-              "Add more product jargon and abbreviations.",
-              "Keep text long so customers read everything."
-            ],
-            answerIndex: 0
-          }
-        ]
-      },
-      {
-        id: "sa-5",
-        title: "Post-Shift Reflection and Development",
-        summary:
-          "Turn shift outcomes into learning moments and next-shift action plans.",
-        time: "17 min",
-        mode: "Self-paced",
-        level: "Advanced",
-        outcomes: [
-          "Summarize wins and blockers with clear next actions.",
-          "Use Copilot to draft coaching asks for supervisors.",
-          "Build continuous-improvement habits from daily work."
-        ],
-        scenarios: [
-          {
-            id: "reflection-loop",
-            title: "Scenario 1: Daily learning loop",
-            context:
-              "Your team missed add-on opportunities in two customer segments today.",
-            question:
-              "What is the strongest Copilot use after shift end?",
-            options: [
-              "Draft a reflection with segment-specific improvements and a plan for tomorrow.",
-              "Ignore the issue and hope tomorrow is better.",
-              "Write only sales totals with no context."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "coaching-request",
-            title: "Scenario 2: Manager coaching prep",
-            context:
-              "You want targeted coaching in greeting and discovery questions.",
-            question:
-              "Which output helps your manager coach you effectively?",
-            options: [
-              "A vague request to improve everything.",
-              "A concise note with 2 observed gaps, 1 goal, and practice scenarios.",
-              "No request; wait for annual review."
-            ],
-            answerIndex: 1
-          }
-        ]
+        label: "Skip context and only show button clicks in the system.",
+        correct: false,
+        supplies: { standard: -8, accuracy: -5 },
+        feedback:
+          "Tool steps matter, but behavior change starts with why the standard process matters."
       }
     ]
   },
   {
-    id: "team-lead",
-    title: "Team Lead Journey",
-    description:
-      "Enable leads to coach associates, communicate updates, and drive adoption with practical Copilot workflows.",
-    jobAids: [
-      "Weekly enablement recap template: wins, blockers, support needed.",
-      "Workflow update translator: system language to floor-ready coaching points.",
-      "Coaching prep prompt for scenario-based huddles.",
-      "Adoption pulse template: confidence, consistency, and escalation trends.",
-      "Launch-day communications checklist across channels."
+    id: "river-crossing",
+    icon: "2",
+    title: "River Crossing: Standard Forecast Flow",
+    duration: "14 min",
+    badge: "Process adherence",
+    summary:
+      "Practice the same sequence every team should follow before forecast submission.",
+    lessons: [
+      "Enter assumptions before numbers so reviewers know why the forecast changed.",
+      "Use required fields and naming conventions before routing for approval.",
+      "Confirm handoffs in the tool instead of side-channel messages."
     ],
-    modules: [
+    scenario:
+      "A budget owner wants to submit a forecast quickly and add assumptions later because the deadline is close.",
+    options: [
       {
-        id: "tl-1",
-        title: "Translating Workflow Changes into Training",
-        summary:
-          "Convert process changes into clear, practical coaching content.",
-        time: "20 min",
-        mode: "Facilitated",
-        level: "Foundational",
-        outcomes: [
-          "Summarize system updates into role-based action items.",
-          "Use Copilot to generate huddle discussion guides.",
-          "Document adoption risks and mitigation plans."
-        ],
-        scenarios: [
-          {
-            id: "workflow-brief",
-            title: "Scenario 1: Workflow briefing",
-            context:
-              "Returns workflow changed and associates are confused about exceptions.",
-            question:
-              "What should a lead ask Copilot to generate first?",
-            options: [
-              "A role-based quick brief with key actions, exceptions, and where to escalate.",
-              "A full technical document copied directly from system notes.",
-              "A generic motivational message only."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "risk-framing",
-            title: "Scenario 2: Adoption risk framing",
-            context:
-              "The update impacts peak-hour transactions.",
-            question:
-              "Which communication approach best reduces risk?",
-            options: [
-              "Share once in chat and assume adoption.",
-              "Provide role impacts, examples, and a same-day practice scenario.",
-              "Delay communication until issues appear."
-            ],
-            answerIndex: 1
-          }
-        ]
+        label:
+          "Coach them to document assumptions first, then submit through the standard approval path.",
+        correct: true,
+        supplies: { standard: 16, accuracy: 12 },
+        feedback:
+          "Correct. This protects the downstream review and reduces rework caused by missing context."
       },
       {
-        id: "tl-2",
-        title: "Facilitation with Copilot",
-        summary:
-          "Use Copilot during live sessions to answer questions and tailor examples.",
-        time: "18 min",
-        mode: "Live Virtual",
-        level: "Foundational",
-        outcomes: [
-          "Create role-play prompts during Q&A.",
-          "Generate alternate examples for different learner levels.",
-          "Capture session notes and action items efficiently."
-        ],
-        scenarios: [
-          {
-            id: "live-questions",
-            title: "Scenario 1: Real-time examples",
-            context:
-              "During virtual training, associates ask for examples specific to weekend traffic.",
-            question:
-              "How should Copilot support facilitation in this moment?",
-            options: [
-              "Generate role-specific examples and immediate follow-up practice prompts.",
-              "Replace the facilitator and run the session alone.",
-              "Postpone all questions until next week."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "action-capture",
-            title: "Scenario 2: Session follow-up",
-            context:
-              "You need to send clear recap notes with owners and due dates.",
-            question:
-              "What should your Copilot prompt request?",
-            options: [
-              "A recap grouped by theme, owner, and deadline with unresolved questions.",
-              "A transcript dump with no structure.",
-              "Only a thank-you message."
-            ],
-            answerIndex: 0
-          }
-        ]
+        label: "Approve the shortcut because the numbers can be fixed later.",
+        correct: false,
+        supplies: { accuracy: -14, standard: -12 },
+        feedback:
+          "Shortcuts create the budget issues the training is designed to prevent."
       },
       {
-        id: "tl-3",
-        title: "Measuring Adoption",
-        summary:
-          "Track confidence, usage, and consistency across the learning journey.",
-        time: "19 min",
-        mode: "Self-paced",
-        level: "Intermediate",
-        outcomes: [
-          "Define simple adoption metrics for team check-ins.",
-          "Use Copilot to summarize qualitative feedback.",
-          "Identify content to refresh based on recurring issues."
-        ],
-        scenarios: [
-          {
-            id: "metric-choice",
-            title: "Scenario 1: Metric selection",
-            context:
-              "Leadership asks if training worked after rollout.",
-            question:
-              "Which metric best reflects practical adoption?",
-            options: [
-              "Number of slides presented in class.",
-              "Consistent task execution with fewer support escalations.",
-              "Length of the kickoff meeting."
-            ],
-            answerIndex: 1
-          },
-          {
-            id: "feedback-synthesis",
-            title: "Scenario 2: Theme extraction",
-            context:
-              "You received mixed qualitative comments from multiple stores.",
-            question:
-              "How should Copilot help synthesize this feedback?",
-            options: [
-              "Cluster comments by theme and suggest targeted refresher actions.",
-              "Average all comments into one sentence.",
-              "Ignore comments and rely only on attendance."
-            ],
-            answerIndex: 0
-          }
-        ]
-      },
-      {
-        id: "tl-4",
-        title: "Coaching for Performance Gaps",
-        summary:
-          "Use Copilot to build focused coaching plans and practice routines.",
-        time: "21 min",
-        mode: "Facilitated + Self-paced",
-        level: "Intermediate",
-        outcomes: [
-          "Identify behavior-level gaps from observed workflows.",
-          "Generate scenario practices aligned to specific needs.",
-          "Track coaching impact over short learning cycles."
-        ],
-        scenarios: [
-          {
-            id: "gap-diagnosis",
-            title: "Scenario 1: Diagnose root cause",
-            context:
-              "One team consistently misses escalation criteria even after training.",
-            question:
-              "Which Copilot output best supports next-step coaching?",
-            options: [
-              "A root-cause hypothesis map with observed behaviors and practice targets.",
-              "A reminder to work harder.",
-              "A generic policy summary."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "practice-design",
-            title: "Scenario 2: Practice structure",
-            context:
-              "You have 10 minutes in a huddle for skill reinforcement.",
-            question:
-              "What format should Copilot create?",
-            options: [
-              "One long lecture script.",
-              "A micro-scenario, expected responses, and debrief prompts.",
-              "No structure, open discussion only."
-            ],
-            answerIndex: 1
-          }
-        ]
-      },
-      {
-        id: "tl-5",
-        title: "Launch Readiness and Communications",
-        summary:
-          "Prepare launch messaging, manager alignment, and support plans for new initiatives.",
-        time: "18 min",
-        mode: "Virtual",
-        level: "Advanced",
-        outcomes: [
-          "Sequence launch communication across stakeholder groups.",
-          "Draft clear callouts for frontline and manager audiences.",
-          "Build readiness checks and support channels."
-        ],
-        scenarios: [
-          {
-            id: "message-map",
-            title: "Scenario 1: Audience mapping",
-            context:
-              "A new tool release affects frontline, supervisors, and support teams differently.",
-            question:
-              "What should your Copilot communication plan include?",
-            options: [
-              "One message for all audiences to save time.",
-              "Audience-specific messages with role impact, timing, and action required.",
-              "Only a technical change log."
-            ],
-            answerIndex: 1
-          },
-          {
-            id: "readiness-check",
-            title: "Scenario 2: Go-live readiness",
-            context:
-              "Launch is tomorrow and leads need confidence checks.",
-            question:
-              "Which checklist is most practical?",
-            options: [
-              "Completion of briefing, practice scenario, support contact, and escalation path.",
-              "Just confirm everyone attended one meeting.",
-              "Skip checks and react after launch."
-            ],
-            answerIndex: 0
-          }
-        ]
+        label: "Ask them to email the assumptions to finance after submission.",
+        correct: false,
+        supplies: { standard: -10, support: -4 },
+        feedback:
+          "Email creates a second source of truth. The trail route keeps the work inside the tool."
       }
     ]
   },
   {
-    id: "operations-associate",
-    title: "Operations Associate Journey",
-    description:
-      "Help operations teams use Copilot to execute accurate, timely workflows and improve communication consistency.",
-    jobAids: [
-      "Daily operations stand-up agenda generated from key blockers.",
-      "Error-resolution prompt template for ERP/CRM task troubleshooting.",
-      "Policy-to-checklist converter for compliance updates.",
-      "Escalation-ready summary template with impact and urgency levels.",
-      "Incident retrospective format for enablement improvements."
+    id: "supply-fort",
+    icon: "3",
+    title: "Supply Fort: Role-Based Job Aids",
+    duration: "12 min",
+    badge: "New-user support",
+    summary:
+      "Give new and existing users the exact aids they need at the moment of work.",
+    lessons: [
+      "Use one-page role guides instead of a long generic manual.",
+      "Build checklists for planners, budget owners, approvers, and leaders.",
+      "Place aids near the task: inside meetings, reminders, and team channels."
     ],
-    modules: [
+    scenario:
+      "A new planner joins mid-cycle and asks where to learn the forecasting process.",
+    options: [
       {
-        id: "oa-1",
-        title: "Copilot for Workflow Accuracy",
-        summary:
-          "Apply Copilot to reduce ambiguity in repeat operational tasks.",
-        time: "18 min",
-        mode: "Self-paced",
-        level: "Foundational",
-        outcomes: [
-          "Build prompts that include process IDs and constraints.",
-          "Generate exception handling notes.",
-          "Create role-specific checklists for daily use."
-        ],
-        scenarios: [
-          {
-            id: "prompt-precision",
-            title: "Scenario 1: Precision prompt",
-            context:
-              "A shipment exception appears in ERP and resolution steps vary by channel.",
-            question:
-              "What makes your Copilot prompt high quality for this task?",
-            options: [
-              "It includes process context, expected format, and constraints.",
-              "It is broad and asks Copilot to guess.",
-              "It asks for unrelated historical details."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "verification-step",
-            title: "Scenario 2: Verification discipline",
-            context:
-              "Copilot returns a sequence that conflicts with yesterday's documented SOP.",
-            question:
-              "What is the correct action?",
-            options: [
-              "Follow Copilot anyway to save time.",
-              "Validate against current SOP/SME guidance, then update aid if needed.",
-              "Stop using SOPs completely."
-            ],
-            answerIndex: 1
-          }
-        ]
+        label:
+          "Point them to the role guide, then pair them with a trail buddy for the first submission.",
+        correct: true,
+        supplies: { support: 14, confidence: 12, standard: 8 },
+        feedback:
+          "Correct. New users need simple aids plus social reinforcement during real work."
       },
       {
-        id: "oa-2",
-        title: "Cross-Team Communication",
-        summary:
-          "Draft clear updates for store, logistics, and leadership partners.",
-        time: "15 min",
-        mode: "Virtual",
-        level: "Foundational",
-        outcomes: [
-          "Rewrite technical details for different audiences.",
-          "Generate concise updates with risks and dependencies.",
-          "Produce follow-up actions and owners."
-        ],
-        scenarios: [
-          {
-            id: "audience-adjustment",
-            title: "Scenario 1: Audience-specific messaging",
-            context:
-              "A delayed shipment impacts three stores and one wholesale partner.",
-            question:
-              "Why tailor Copilot output by audience?",
-            options: [
-              "Different teams need different levels of detail and action clarity.",
-              "Only executives should receive updates.",
-              "Tailoring adds no operational value."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "action-clarity",
-            title: "Scenario 2: Owner clarity",
-            context:
-              "Teams report confusion because updates do not specify owners.",
-            question:
-              "What should Copilot produce in each update?",
-            options: [
-              "Owner, due time, dependency, and escalation point.",
-              "A general status statement without names.",
-              "A long appendix before action items."
-            ],
-            answerIndex: 0
-          }
-        ]
+        label: "Send the full system documentation and ask them to self-study.",
+        correct: false,
+        supplies: { confidence: -10, support: -6 },
+        feedback:
+          "That overloads the learner. Enablement should reduce friction and focus on the top tasks."
       },
       {
-        id: "oa-3",
-        title: "Continuous Improvement Loop",
-        summary:
-          "Capture lessons learned and refresh enablement assets over time.",
-        time: "17 min",
-        mode: "Facilitated",
-        level: "Intermediate",
-        outcomes: [
-          "Convert incident logs into training improvements.",
-          "Update job aids from recurring support trends.",
-          "Prioritize next enablement topics with data."
-        ],
-        scenarios: [
-          {
-            id: "error-patterns",
-            title: "Scenario 1: Pattern analysis",
-            context:
-              "One process step causes repeated errors across locations.",
-            question:
-              "What is the best Copilot-assisted response?",
-            options: [
-              "Create targeted refresher training and an updated quick-reference aid.",
-              "Wait for quarterly planning.",
-              "Assume the issue will self-correct."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "priority-ranking",
-            title: "Scenario 2: Improvement prioritization",
-            context:
-              "You have ten improvement ideas but limited enablement capacity.",
-            question:
-              "How should Copilot help rank priorities?",
-            options: [
-              "Sort by impact frequency, business risk, and implementation effort.",
-              "Pick randomly to move faster.",
-              "Prioritize the longest idea list first."
-            ],
-            answerIndex: 0
-          }
-        ]
+        label: "Have them watch a recording after the cycle closes.",
+        correct: false,
+        supplies: { standard: -6, accuracy: -8 },
+        feedback:
+          "Delayed support misses the moment when behavior is formed."
+      }
+    ]
+  },
+  {
+    id: "mountain-pass",
+    icon: "4",
+    title: "Mountain Pass: Exception Decisions",
+    duration: "15 min",
+    badge: "Budget accuracy",
+    summary:
+      "Handle edge cases without creating hidden workarounds or budget risk.",
+    lessons: [
+      "Recognize high-risk changes that need review before submission.",
+      "Use the exception path when the standard route does not fit.",
+      "Capture decision rationale so teams can learn from recurring issues."
+    ],
+    scenario:
+      "A late vendor change shifts spend into a different quarter. The team is unsure whether to adjust forecast assumptions or escalate.",
+    options: [
+      {
+        label:
+          "Use the exception checklist, document the impact, and escalate through the named reviewer.",
+        correct: true,
+        supplies: { accuracy: 18, standard: 10, support: 8 },
+        feedback:
+          "Correct. The exception route keeps flexibility without losing control."
       },
       {
-        id: "oa-4",
-        title: "Exception Management and Escalation",
-        summary:
-          "Use Copilot to triage incidents quickly and route escalations correctly.",
-        time: "20 min",
-        mode: "Facilitated + Virtual",
-        level: "Intermediate",
-        outcomes: [
-          "Classify incident severity with clear criteria.",
-          "Draft escalation summaries for fast decision-making.",
-          "Reduce handoff friction during high-pressure periods."
-        ],
-        scenarios: [
-          {
-            id: "severity-triage",
-            title: "Scenario 1: Severity triage",
-            context:
-              "A system issue affects order confirmations in multiple regions.",
-            question:
-              "What should Copilot include in a triage output?",
-            options: [
-              "Severity level, impacted processes, current workaround, and next checkpoint.",
-              "Only technical logs.",
-              "A high-level note with no urgency guidance."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "exec-summary",
-            title: "Scenario 2: Escalation summary",
-            context:
-              "Leadership needs a one-minute readout for action.",
-            question:
-              "Which summary structure is best?",
-            options: [
-              "Issue, impact, actions taken, decision needed, and owner.",
-              "Raw message history copied from chat.",
-              "A long narrative without decisions."
-            ],
-            answerIndex: 0
-          }
-        ]
+        label: "Change the numbers quietly so the total still looks close.",
+        correct: false,
+        supplies: { accuracy: -18, standard: -14 },
+        feedback:
+          "Hidden edits are a major budget-risk behavior and should trigger coaching."
       },
       {
-        id: "oa-5",
-        title: "SOP and Compliance Enablement",
-        summary:
-          "Convert policy updates into usable SOPs and micro-learning assets.",
-        time: "19 min",
-        mode: "Self-paced",
-        level: "Advanced",
-        outcomes: [
-          "Transform policy language into role-ready SOP checklists.",
-          "Create micro-learning refreshers tied to compliance risk points.",
-          "Maintain current documentation with version clarity."
-        ],
-        scenarios: [
-          {
-            id: "policy-conversion",
-            title: "Scenario 1: Policy to SOP conversion",
-            context:
-              "A compliance update is dense and difficult for associates to apply.",
-            question:
-              "What should Copilot generate first?",
-            options: [
-              "A step-by-step SOP with role responsibilities and validation checks.",
-              "A verbatim copy of legal text.",
-              "A short motivational quote."
-            ],
-            answerIndex: 0
-          },
-          {
-            id: "version-control",
-            title: "Scenario 2: Documentation currency",
-            context:
-              "Teams are using outdated reference sheets from prior launches.",
-            question:
-              "What is the best enablement response?",
-            options: [
-              "Add version/date labels and replace old materials with a launch note.",
-              "Keep all versions visible and let teams choose.",
-              "Only update documents annually."
-            ],
-            answerIndex: 0
-          }
-        ]
+        label: "Wait until next month to explain the variance.",
+        correct: false,
+        supplies: { accuracy: -12, confidence: -6 },
+        feedback:
+          "The issue needs timely documentation and escalation while decisions are still useful."
+      }
+    ]
+  },
+  {
+    id: "oregon-city",
+    icon: "5",
+    title: "Oregon City: Reinforce and Measure",
+    duration: "10 min",
+    badge: "Behavior change",
+    summary:
+      "Sustain adoption with manager routines and metrics that prove the process is changing.",
+    lessons: [
+      "Coach from observed behavior: missing assumptions, skipped approvals, or repeat rework.",
+      "Track engagement, decision quality, process adherence, and business outcomes together.",
+      "Celebrate trail champions who model the standard route for peers."
+    ],
+    scenario:
+      "Leaders ask if training worked. Attendance was high, but budget rework is still appearing in two teams.",
+    options: [
+      {
+        label:
+          "Compare completion, scenario scores, process audit data, and rework trends by team.",
+        correct: true,
+        supplies: { standard: 14, accuracy: 12, support: 10, confidence: 8 },
+        feedback:
+          "Correct. Success is behavior change over time, not just content consumption."
+      },
+      {
+        label: "Report only the number of people who attended training.",
+        correct: false,
+        supplies: { standard: -8, support: -6 },
+        feedback:
+          "Attendance is only a leading indicator. It does not prove process adherence."
+      },
+      {
+        label: "Assume the tool is the issue and pause reinforcement.",
+        correct: false,
+        supplies: { confidence: -8, accuracy: -8 },
+        feedback:
+          "The data should separate tool issues from behavior gaps before changing direction."
       }
     ]
   }
 ];
 
+const roleGuides = {
+  planner: {
+    label: "Forecast Planner",
+    focus: "assumptions, variance notes, and submission quality"
+  },
+  owner: {
+    label: "Budget Owner",
+    focus: "timely inputs, documented decisions, and handoff discipline"
+  },
+  approver: {
+    label: "Approver",
+    focus: "review consistency, exception judgment, and escalation clarity"
+  },
+  leader: {
+    label: "Team Leader",
+    focus: "reinforcement routines, coaching moments, and adoption measurement"
+  }
+};
+
+const storageKey = "forecast-trail-state-v1";
+const defaultSupplies = {
+  confidence: 40,
+  accuracy: 30,
+  standard: 25,
+  support: 35
+};
+const defaultState = {
+  travelerName: "",
+  role: "planner",
+  completedStops: [],
+  choices: {},
+  supplies: { ...defaultSupplies },
+  visits: 1
+};
+
 const elements = {
-  roleButtons: document.getElementById("role-buttons"),
-  moduleList: document.getElementById("module-list"),
-  completedCount: document.getElementById("completed-count"),
+  travelerName: document.getElementById("traveler-name"),
+  travelerRole: document.getElementById("traveler-role"),
+  savePassport: document.getElementById("save-passport"),
+  passportFeedback: document.getElementById("passport-feedback"),
+  confidence: document.getElementById("supply-confidence"),
+  accuracy: document.getElementById("supply-accuracy"),
+  standard: document.getElementById("supply-standard"),
+  support: document.getElementById("supply-support"),
+  progressTitle: document.getElementById("progress-title"),
   progressPercent: document.getElementById("progress-percent"),
-  quizAverage: document.getElementById("quiz-average"),
-  journeyTitle: document.getElementById("journey-title"),
-  journeyDescription: document.getElementById("journey-description"),
-  badgeStatus: document.getElementById("badge-status"),
-  moduleTemplate: document.getElementById("module-template"),
-  moduleDialog: document.getElementById("module-dialog"),
+  trailStopList: document.getElementById("trail-stop-list"),
+  metricCompletion: document.getElementById("metric-completion"),
+  metricDecision: document.getElementById("metric-decision"),
+  metricBehavior: document.getElementById("metric-behavior"),
+  metricRisk: document.getElementById("metric-risk"),
+  stopDialog: document.getElementById("stop-dialog"),
   closeDialog: document.getElementById("close-dialog"),
+  dialogKicker: document.getElementById("dialog-kicker"),
   dialogTitle: document.getElementById("dialog-title"),
   dialogSummary: document.getElementById("dialog-summary"),
-  dialogOutcomes: document.getElementById("dialog-outcomes"),
-  dialogScenarios: document.getElementById("dialog-scenarios"),
-  jobAidsList: document.getElementById("job-aids-list"),
-  associateName: document.getElementById("associate-name"),
-  saveProfile: document.getElementById("save-profile"),
-  downloadCertificate: document.getElementById("download-certificate"),
-  managerLearners: document.getElementById("manager-learners"),
-  managerCompletion: document.getElementById("manager-completion"),
-  managerCompleted: document.getElementById("manager-completed"),
-  managerAtRisk: document.getElementById("manager-at-risk"),
-  managerFilter: document.getElementById("manager-filter"),
-  managerSort: document.getElementById("manager-sort"),
-  managerTableBody: document.getElementById("manager-table-body")
+  dialogLessons: document.getElementById("dialog-lessons"),
+  dialogScenario: document.getElementById("dialog-scenario"),
+  dialogOptions: document.getElementById("dialog-options"),
+  choiceFeedback: document.getElementById("choice-feedback")
 };
 
-const storageKey = "copilot-lms-state";
-const learnerRecordsKey = "copilot-lms-learners";
-const PASS_THRESHOLD = 80;
-const QUIZ_RISK_THRESHOLD = 70;
-const STALE_DAYS_THRESHOLD = 7;
-const managerViewState = {
-  filter: "all",
-  sort: "risk-desc"
-};
-
-const defaultState = {
-  associateName: "",
-  selectedRoleId: roleJourneys[0].id,
-  completedModules: {},
-  quizScores: {}
-};
-
-let appState = loadState();
-let learnerRecords = loadLearnerRecords();
+let state = loadState();
+let activeStopId = null;
 
 function loadState() {
   const raw = localStorage.getItem(storageKey);
   if (!raw) {
-    return { ...defaultState };
+    return { ...defaultState, supplies: { ...defaultSupplies } };
   }
 
   try {
@@ -766,686 +277,322 @@ function loadState() {
     return {
       ...defaultState,
       ...parsed,
-      completedModules: parsed.completedModules || {},
-      quizScores: parsed.quizScores || {}
+      completedStops: Array.isArray(parsed.completedStops)
+        ? parsed.completedStops
+        : [],
+      choices:
+        parsed.choices && typeof parsed.choices === "object"
+          ? parsed.choices
+          : {},
+      supplies: {
+        ...defaultSupplies,
+        ...(parsed.supplies || {})
+      },
+      visits: Number.isFinite(parsed.visits) ? parsed.visits + 1 : 1
     };
   } catch (_error) {
-    return { ...defaultState };
+    return { ...defaultState, supplies: { ...defaultSupplies } };
   }
 }
 
 function saveState() {
-  localStorage.setItem(storageKey, JSON.stringify(appState));
+  localStorage.setItem(storageKey, JSON.stringify(state));
 }
 
-function loadLearnerRecords() {
-  const raw = localStorage.getItem(learnerRecordsKey);
-  if (!raw) {
-    return {};
-  }
-
-  try {
-    const parsed = JSON.parse(raw);
-    return typeof parsed === "object" && parsed !== null ? parsed : {};
-  } catch (_error) {
-    return {};
-  }
+function clampSupply(value) {
+  return Math.max(0, Math.min(100, value));
 }
 
-function saveLearnerRecords() {
-  localStorage.setItem(learnerRecordsKey, JSON.stringify(learnerRecords));
+function recalculateSupplies() {
+  const supplies = { ...defaultSupplies };
+
+  Object.entries(state.choices).forEach(([stopId, choiceIndex]) => {
+    const stop = trailStops.find((trailStop) => trailStop.id === stopId);
+    const choice = stop ? stop.options[choiceIndex] : null;
+
+    if (!choice) {
+      return;
+    }
+
+    Object.entries(choice.supplies).forEach(([key, value]) => {
+      supplies[key] = clampSupply((supplies[key] || 0) + value);
+    });
+  });
+
+  state.supplies = supplies;
 }
 
-function getCurrentJourney() {
-  return (
-    roleJourneys.find((journey) => journey.id === appState.selectedRoleId) ||
-    roleJourneys[0]
-  );
+function stopIsComplete(stopId) {
+  return state.completedStops.includes(stopId);
 }
 
-function moduleIsComplete(moduleId) {
-  return Boolean(appState.completedModules[moduleId]);
-}
-
-function getJourneyById(roleId) {
-  return roleJourneys.find((journey) => journey.id === roleId) || roleJourneys[0];
-}
-
-function getModuleScenarios(module) {
-  if (Array.isArray(module.scenarios)) {
-    return module.scenarios;
-  }
-
-  if (module.scenario && module.quiz) {
-    return [
-      {
-        id: "legacy-check",
-        title: "Scenario challenge",
-        context: module.scenario,
-        question: module.quiz.question,
-        options: module.quiz.options,
-        answerIndex: module.quiz.answerIndex
-      }
-    ];
-  }
-
-  return [];
-}
-
-function getScenarioScoreKey(moduleId, scenarioId) {
-  return `${moduleId}::${scenarioId}`;
-}
-
-function getModuleAssessment(module) {
-  const scenarios = getModuleScenarios(module);
-  if (scenarios.length === 0) {
-    return {
-      scenarioCount: 0,
-      answeredCount: 0,
-      correctCount: 0,
-      average: 0,
-      passed: true
-    };
-  }
-
-  const scores = scenarios
-    .map((scenario) => appState.quizScores[getScenarioScoreKey(module.id, scenario.id)])
-    .filter((score) => typeof score === "number");
-  const answeredCount = scores.length;
-  const correctCount = scores.filter((score) => score === 100).length;
-  const average = answeredCount
-    ? Math.round(scores.reduce((sum, score) => sum + score, 0) / answeredCount)
-    : 0;
-  const passed = answeredCount === scenarios.length && average >= PASS_THRESHOLD;
-
-  return {
-    scenarioCount: scenarios.length,
-    answeredCount,
-    correctCount,
-    average,
-    passed
-  };
-}
-
-function isModuleUnlocked(modules, moduleIndex) {
-  if (moduleIndex === 0) {
+function stopIsUnlocked(index) {
+  if (index === 0) {
     return true;
   }
 
-  const previousModule = modules[moduleIndex - 1];
-  const previousAssessment = getModuleAssessment(previousModule);
-  return moduleIsComplete(previousModule.id) && previousAssessment.passed;
+  return stopIsComplete(trailStops[index - 1].id);
 }
 
-function getJourneyStats(roleId = appState.selectedRoleId) {
-  const journey = getJourneyById(roleId);
-  const total = journey.modules.length;
-  const completed = journey.modules.filter((module) =>
-    Boolean(appState.completedModules[module.id])
-  ).length;
-  const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
-
-  const scores = journey.modules
-    .flatMap((module) =>
-      getModuleScenarios(module).map((scenario) =>
-        appState.quizScores[getScenarioScoreKey(module.id, scenario.id)]
-      )
-    )
-    .filter((score) => typeof score === "number");
-  const quizAverage = scores.length
-    ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
-    : 0;
-
-  return { journey, total, completed, progress, quizAverage };
+function selectedChoice(stopId) {
+  return state.choices[stopId];
 }
 
-function normalizeName(value) {
-  return value.trim().toLowerCase();
+function countCorrectChoices() {
+  return trailStops.reduce((count, stop) => {
+    const choiceIndex = selectedChoice(stop.id);
+    const choice = stop.options[choiceIndex];
+    return choice && choice.correct ? count + 1 : count;
+  }, 0);
 }
 
-function buildLearnerRecordKey(name, roleId) {
-  return `${normalizeName(name)}::${roleId}`;
+function calculateProgress() {
+  return Math.round((state.completedStops.length / trailStops.length) * 100);
 }
 
-function syncCurrentLearnerRecord() {
-  const associateName = appState.associateName.trim();
-  if (!associateName) {
-    return;
+function calculateDecisionQuality() {
+  const answeredStops = trailStops.filter((stop) =>
+    Number.isInteger(selectedChoice(stop.id))
+  );
+
+  if (answeredStops.length === 0) {
+    return 0;
   }
 
-  const stats = getJourneyStats(appState.selectedRoleId);
-  const key = buildLearnerRecordKey(associateName, appState.selectedRoleId);
-
-  learnerRecords[key] = {
-    associateName,
-    roleId: appState.selectedRoleId,
-    roleTitle: stats.journey.title.replace(" Journey", ""),
-    completed: stats.completed,
-    total: stats.total,
-    progress: stats.progress,
-    quizAverage: stats.quizAverage,
-    lastUpdated: new Date().toISOString()
-  };
-
-  saveLearnerRecords();
+  return Math.round((countCorrectChoices() / answeredStops.length) * 100);
 }
 
-function markModuleComplete(moduleId, modules, moduleIndex) {
-  const module = modules[moduleIndex];
-  if (!module) {
-    return;
+function calculateBehaviorScore() {
+  const supplyAverage = Math.round(
+    (state.supplies.confidence +
+      state.supplies.accuracy +
+      state.supplies.standard +
+      state.supplies.support) /
+      4
+  );
+  return Math.round((calculateProgress() + calculateDecisionQuality() + supplyAverage) / 3);
+}
+
+function adoptionRiskLabel() {
+  const progress = calculateProgress();
+  const decision = calculateDecisionQuality();
+  const behavior = calculateBehaviorScore();
+
+  if (progress >= 80 && decision >= 80 && behavior >= 75) {
+    return "Low";
   }
 
-  const assessment = getModuleAssessment(module);
-  if (!isModuleUnlocked(modules, moduleIndex) || !assessment.passed) {
-    return;
+  if (progress >= 40 && decision >= 60 && behavior >= 55) {
+    return "Medium";
   }
 
-  appState.completedModules[moduleId] = true;
-  saveState();
-  syncCurrentLearnerRecord();
-  render();
+  return "High";
 }
 
-function updateQuizScore(moduleId, scenarioId, score) {
-  appState.quizScores[getScenarioScoreKey(moduleId, scenarioId)] = score;
-  saveState();
-  syncCurrentLearnerRecord();
-  render();
+function renderPassport() {
+  elements.travelerName.value = state.travelerName;
+  elements.travelerRole.value = state.role;
+
+  const role = roleGuides[state.role] || roleGuides.planner;
+  elements.passportFeedback.textContent = state.travelerName
+    ? `${state.travelerName} is traveling as ${role.label}, focused on ${role.focus}.`
+    : "Stamp your passport to personalize the journey.";
 }
 
-function updateStats() {
-  const currentStats = getJourneyStats();
-
-  elements.completedCount.textContent = `${currentStats.completed} / ${currentStats.total}`;
-  elements.progressPercent.textContent = `${currentStats.progress}%`;
-  elements.quizAverage.textContent = `${currentStats.quizAverage}%`;
-  elements.badgeStatus.textContent =
-    currentStats.progress === 100
-      ? "Journey Complete"
-      : currentStats.progress > 0
-        ? "In Progress"
-        : "Not Started";
-
-  const canDownload =
-    currentStats.progress === 100 && appState.associateName.trim().length > 0;
-  elements.downloadCertificate.disabled = !canDownload;
+function renderSupplies() {
+  elements.confidence.textContent = state.supplies.confidence;
+  elements.accuracy.textContent = state.supplies.accuracy;
+  elements.standard.textContent = state.supplies.standard;
+  elements.support.textContent = state.supplies.support;
 }
 
-function renderRoleButtons() {
-  elements.roleButtons.innerHTML = "";
-
-  roleJourneys.forEach((journey) => {
-    const button = document.createElement("button");
-    button.className = "role-btn";
-    if (journey.id === appState.selectedRoleId) {
-      button.classList.add("active");
-    }
-    button.textContent = journey.title.replace(" Journey", "");
-    button.addEventListener("click", () => {
-      syncCurrentLearnerRecord();
-      appState.selectedRoleId = journey.id;
-      saveState();
-      render();
-    });
-    elements.roleButtons.appendChild(button);
-  });
+function renderProgress() {
+  const progress = calculateProgress();
+  elements.progressTitle.textContent = `${state.completedStops.length} of ${trailStops.length} trail stops complete`;
+  elements.progressPercent.textContent = `${progress}%`;
+  elements.progressPercent.parentElement.style.setProperty(
+    "--progress",
+    `${progress * 3.6}deg`
+  );
 }
 
-function renderJobAids() {
-  const currentJourney = getCurrentJourney();
-  elements.jobAidsList.innerHTML = "";
+function renderTrailStops() {
+  elements.trailStopList.innerHTML = "";
 
-  currentJourney.jobAids.forEach((aid) => {
-    const li = document.createElement("li");
-    li.textContent = aid;
-    elements.jobAidsList.appendChild(li);
-  });
-}
+  trailStops.forEach((stop, index) => {
+    const unlocked = stopIsUnlocked(index);
+    const complete = stopIsComplete(stop.id);
+    const choiceIndex = selectedChoice(stop.id);
+    const hasChoice = Number.isInteger(choiceIndex);
 
-function openModuleDialog(module) {
-  const scenarios = getModuleScenarios(module);
-  elements.dialogTitle.textContent = module.title;
-  elements.dialogSummary.textContent = module.summary;
+    const wrapper = document.createElement("article");
+    wrapper.className = `trail-stop${complete ? " completed" : ""}`;
 
-  elements.dialogOutcomes.innerHTML = "";
-  module.outcomes.forEach((outcome) => {
-    const li = document.createElement("li");
-    li.textContent = outcome;
-    elements.dialogOutcomes.appendChild(li);
-  });
+    const marker = document.createElement("div");
+    marker.className = "marker";
+    marker.textContent = complete ? "✓" : stop.icon;
+    wrapper.appendChild(marker);
 
-  elements.dialogScenarios.innerHTML = "";
+    const card = document.createElement("div");
+    card.className = `trail-stop-card${unlocked ? "" : " locked"}`;
 
-  scenarios.forEach((scenario, scenarioIndex) => {
-    const container = document.createElement("article");
-    container.className = "scenario-card";
+    const header = document.createElement("header");
+    const titleGroup = document.createElement("div");
+    const title = document.createElement("h3");
+    title.textContent = stop.title;
+    const summary = document.createElement("p");
+    summary.textContent = stop.summary;
+    titleGroup.append(title, summary);
 
-    const title = document.createElement("p");
-    title.className = "scenario-title";
-    title.textContent = scenario.title || `Scenario ${scenarioIndex + 1}`;
-    container.appendChild(title);
+    const badge = document.createElement("span");
+    badge.className = "tag";
+    badge.textContent = complete ? "Stamped" : unlocked ? "Open" : "Locked";
+    header.append(titleGroup, badge);
 
-    const context = document.createElement("p");
-    context.className = "scenario-context";
-    context.textContent = scenario.context;
-    container.appendChild(context);
-
-    const question = document.createElement("p");
-    question.className = "scenario-question";
-    question.textContent = scenario.question;
-    container.appendChild(question);
-
-    const options = document.createElement("div");
-    options.className = "button-group stacked";
-
-    const feedback = document.createElement("p");
-    feedback.className = "feedback";
-
-    const existingScore =
-      appState.quizScores[getScenarioScoreKey(module.id, scenario.id)];
-    if (existingScore === 100) {
-      feedback.textContent = "Previously answered correctly.";
-      feedback.className = "feedback good";
-    } else if (existingScore === 0) {
-      feedback.textContent = "Previously answered incorrectly. Try again.";
-      feedback.className = "feedback bad";
-    }
-
-    scenario.options.forEach((option, optionIndex) => {
-      const button = document.createElement("button");
-      button.textContent = option;
-      button.addEventListener("click", () => {
-        const correct = optionIndex === scenario.answerIndex;
-        feedback.textContent = correct
-          ? "Correct. Great workflow-focused choice."
-          : "Not quite. Review the scenario and try again.";
-        feedback.className = `feedback ${correct ? "good" : "bad"}`;
-        updateQuizScore(module.id, scenario.id, correct ? 100 : 0);
-      });
-      options.appendChild(button);
-    });
-
-    container.appendChild(options);
-    container.appendChild(feedback);
-    elements.dialogScenarios.appendChild(container);
-  });
-
-  elements.moduleDialog.showModal();
-}
-
-function renderModules() {
-  const currentJourney = getCurrentJourney();
-  elements.moduleList.innerHTML = "";
-
-  currentJourney.modules.forEach((module, index) => {
-    const fragment = elements.moduleTemplate.content.cloneNode(true);
-    const container = fragment.querySelector(".module-item");
-    const title = fragment.querySelector(".module-title");
-    const summary = fragment.querySelector(".module-summary");
-    const status = fragment.querySelector(".module-status");
-    const time = fragment.querySelector(".module-time");
-    const mode = fragment.querySelector(".module-mode");
-    const metaRow = fragment.querySelector(".meta-row");
-    const detailsButton = fragment.querySelector(".details-btn");
-    const completeButton = fragment.querySelector(".complete-btn");
-    const assessment = getModuleAssessment(module);
-    const unlocked = isModuleUnlocked(currentJourney.modules, index);
-    const isCompleted = moduleIsComplete(module.id);
-
-    title.textContent = module.title;
-    summary.textContent = module.summary;
-    status.textContent = unlocked
-      ? `Assessment: ${assessment.correctCount}/${assessment.scenarioCount} correct (${assessment.average}% avg, pass ${PASS_THRESHOLD}%+)`
-      : "Locked: pass and complete the previous module to unlock.";
-    time.textContent = module.time;
-    mode.textContent = module.mode;
-    if (assessment.scenarioCount > 0) {
-      const scenarioPill = document.createElement("span");
-      scenarioPill.className = "pill";
-      scenarioPill.textContent = `${assessment.scenarioCount} scenarios`;
-      metaRow.appendChild(scenarioPill);
-    }
-    if (module.level) {
-      const levelPill = document.createElement("span");
-      levelPill.className = "pill";
-      levelPill.textContent = module.level;
-      metaRow.appendChild(levelPill);
-    }
-
-    if (isCompleted) {
-      container.classList.add("completed");
-      completeButton.textContent = "Completed";
-      completeButton.disabled = true;
-    } else if (!unlocked) {
-      container.classList.add("locked");
-      detailsButton.disabled = true;
-      completeButton.textContent = "Locked";
-      completeButton.disabled = true;
-    } else if (!assessment.passed) {
-      completeButton.textContent = "Pass scenarios to complete";
-      completeButton.disabled = true;
-    }
-
-    detailsButton.addEventListener("click", () => openModuleDialog(module));
-    completeButton.addEventListener("click", () =>
-      markModuleComplete(module.id, currentJourney.modules, index)
-    );
-
-    elements.moduleList.appendChild(fragment);
-  });
-}
-
-function renderHeader() {
-  const currentJourney = getCurrentJourney();
-  elements.journeyTitle.textContent = currentJourney.title;
-  elements.journeyDescription.textContent = currentJourney.description;
-  elements.associateName.value = appState.associateName;
-}
-
-function formatTimestamp(timestamp) {
-  const date = new Date(timestamp);
-  if (Number.isNaN(date.getTime())) {
-    return "Unknown";
-  }
-
-  return date.toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit"
-  });
-}
-
-function getDaysSince(timestamp) {
-  const date = new Date(timestamp);
-  if (Number.isNaN(date.getTime())) {
-    return null;
-  }
-
-  const diffMs = Date.now() - date.getTime();
-  return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
-}
-
-function evaluateLearnerRisk(record) {
-  const progress = Number.isFinite(record.progress) ? record.progress : 0;
-  const quizAverage = Number.isFinite(record.quizAverage) ? record.quizAverage : 0;
-  const daysSinceUpdate = getDaysSince(record.lastUpdated);
-  const reasons = [];
-
-  if (quizAverage < QUIZ_RISK_THRESHOLD) {
-    reasons.push(`Quiz average below ${QUIZ_RISK_THRESHOLD}%`);
-  }
-
-  if (
-    daysSinceUpdate !== null &&
-    progress < 100 &&
-    daysSinceUpdate >= STALE_DAYS_THRESHOLD
-  ) {
-    reasons.push(`No progress updates for ${daysSinceUpdate} days`);
-  }
-
-  return {
-    isAtRisk: reasons.length > 0,
-    reasons
-  };
-}
-
-function sortLearners(learners, sortKey) {
-  const list = [...learners];
-
-  list.sort((a, b) => {
-    switch (sortKey) {
-      case "stale-desc":
-        return b.daysSinceUpdate - a.daysSinceUpdate;
-      case "quiz-asc":
-        return a.safeQuiz - b.safeQuiz;
-      case "progress-asc":
-        return a.safeProgress - b.safeProgress;
-      case "updated-desc":
-        return String(b.record.lastUpdated || "").localeCompare(
-          String(a.record.lastUpdated || "")
-        );
-      case "risk-desc":
-      default: {
-        const aRiskScore = a.risk.isAtRisk ? 1 : 0;
-        const bRiskScore = b.risk.isAtRisk ? 1 : 0;
-        if (bRiskScore !== aRiskScore) {
-          return bRiskScore - aRiskScore;
-        }
-        if (b.daysSinceUpdate !== a.daysSinceUpdate) {
-          return b.daysSinceUpdate - a.daysSinceUpdate;
-        }
-        return a.safeQuiz - b.safeQuiz;
+    const tagRow = document.createElement("div");
+    tagRow.className = "tag-row";
+    [stop.duration, stop.badge, hasChoice ? "Choice recorded" : "Choice pending"].forEach(
+      (label) => {
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = label;
+        tagRow.appendChild(tag);
       }
-    }
-  });
-
-  return list;
-}
-
-function renderManagerDashboard() {
-  elements.managerFilter.value = managerViewState.filter;
-  elements.managerSort.value = managerViewState.sort;
-
-  const records = Object.values(learnerRecords)
-    .filter((record) => Boolean(record))
-    .sort((a, b) =>
-      String(b.lastUpdated || "").localeCompare(String(a.lastUpdated || ""))
     );
 
-  const normalizedRecords = records.map((record) => {
-    const safeAssociate = record.associateName || "Unknown";
-    const safeRole = record.roleTitle || "Unknown";
-    const safeProgress = Number.isFinite(record.progress) ? record.progress : 0;
-    const safeCompleted = Number.isFinite(record.completed) ? record.completed : 0;
-    const safeTotal = Number.isFinite(record.total) ? record.total : 0;
-    const safeQuiz = Number.isFinite(record.quizAverage) ? record.quizAverage : 0;
+    const actions = document.createElement("div");
+    actions.className = "stop-actions";
 
-    return {
-      record,
-      safeAssociate,
-      safeRole,
-      safeProgress,
-      safeCompleted,
-      safeTotal,
-      safeQuiz,
-      daysSinceUpdate: getDaysSince(record.lastUpdated) ?? 0,
-      risk: evaluateLearnerRisk(record)
-    };
-  });
+    const openButton = document.createElement("button");
+    openButton.type = "button";
+    openButton.textContent = unlocked ? "Enter stop" : "Locked";
+    openButton.disabled = !unlocked;
+    openButton.addEventListener("click", () => openStop(stop));
 
-  const totalLearners = normalizedRecords.length;
-  const avgCompletion = totalLearners
-    ? Math.round(
-      normalizedRecords.reduce((sum, learner) => sum + learner.safeProgress, 0) / totalLearners
-    )
-    : 0;
-  const completedJourneys = normalizedRecords.filter(
-    (learner) => learner.safeProgress === 100
-  ).length;
-  const atRiskLearners = normalizedRecords.filter(
-    (learner) => learner.risk.isAtRisk
-  ).length;
+    const completeButton = document.createElement("button");
+    completeButton.type = "button";
+    completeButton.className = "complete-button";
+    completeButton.textContent = complete ? "Passport stamped" : "Stamp complete";
+    completeButton.disabled = complete || !unlocked || !hasChoice;
+    completeButton.addEventListener("click", () => completeStop(stop.id));
 
-  elements.managerLearners.textContent = `${totalLearners}`;
-  elements.managerCompletion.textContent = `${avgCompletion}%`;
-  elements.managerCompleted.textContent = `${completedJourneys}`;
-  elements.managerAtRisk.textContent = `${atRiskLearners}`;
-
-  let tableRows = normalizedRecords;
-  if (managerViewState.filter === "at-risk") {
-    tableRows = tableRows.filter((learner) => learner.risk.isAtRisk);
-  } else if (managerViewState.filter === "on-track") {
-    tableRows = tableRows.filter((learner) => !learner.risk.isAtRisk);
-  }
-  tableRows = sortLearners(tableRows, managerViewState.sort);
-
-  elements.managerTableBody.innerHTML = "";
-
-  if (normalizedRecords.length === 0) {
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-    cell.colSpan = 6;
-    cell.textContent = "No learner records yet. Save profiles and complete modules to populate this report.";
-    row.appendChild(cell);
-    elements.managerTableBody.appendChild(row);
-    return;
-  }
-
-  if (tableRows.length === 0) {
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-    cell.colSpan = 6;
-    cell.textContent = "No learners match the current filter.";
-    row.appendChild(cell);
-    elements.managerTableBody.appendChild(row);
-    return;
-  }
-
-  tableRows.forEach((learner) => {
-    const row = document.createElement("tr");
-    if (learner.risk.isAtRisk) {
-      row.classList.add("risk-row");
-    }
-
-    const associateCell = document.createElement("td");
-    associateCell.textContent = learner.safeAssociate;
-    row.appendChild(associateCell);
-
-    const roleCell = document.createElement("td");
-    roleCell.textContent = learner.safeRole;
-    row.appendChild(roleCell);
-
-    const progressCell = document.createElement("td");
-    progressCell.textContent = `${learner.safeProgress}% (${learner.safeCompleted}/${learner.safeTotal})`;
-    row.appendChild(progressCell);
-
-    const quizCell = document.createElement("td");
-    quizCell.textContent = `${learner.safeQuiz}%`;
-    row.appendChild(quizCell);
-
-    const riskCell = document.createElement("td");
-    const riskBadge = document.createElement("span");
-    riskBadge.className = `risk-pill ${learner.risk.isAtRisk ? "at-risk" : "on-track"}`;
-    riskBadge.textContent = learner.risk.isAtRisk ? "At Risk" : "On Track";
-    if (learner.risk.reasons.length > 0) {
-      riskBadge.title = learner.risk.reasons.join(" | ");
-    }
-    riskCell.appendChild(riskBadge);
-    row.appendChild(riskCell);
-
-    const updatedCell = document.createElement("td");
-    updatedCell.textContent = formatTimestamp(learner.record.lastUpdated);
-    row.appendChild(updatedCell);
-
-    elements.managerTableBody.appendChild(row);
+    actions.append(openButton, completeButton);
+    card.append(header, tagRow, actions);
+    wrapper.appendChild(card);
+    elements.trailStopList.appendChild(wrapper);
   });
 }
 
-function escapeXml(value) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll("\"", "&quot;")
-    .replaceAll("'", "&apos;");
-}
+function renderMetrics() {
+  const progress = calculateProgress();
+  const decision = calculateDecisionQuality();
+  const behavior = calculateBehaviorScore();
+  const risk = adoptionRiskLabel();
 
-function slugify(value) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function downloadCertificate() {
-  const stats = getJourneyStats();
-  const associateName = appState.associateName.trim();
-
-  if (!associateName || stats.progress < 100) {
-    return;
-  }
-
-  const roleLabel = stats.journey.title.replace(" Journey", "");
-  const issuedOn = new Date();
-  const issuedLabel = issuedOn.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-  const certId = `CC-${issuedOn.getTime().toString().slice(-8)}`;
-
-  const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f7fbff" />
-      <stop offset="100%" stop-color="#edf3ff" />
-    </linearGradient>
-  </defs>
-  <rect x="0" y="0" width="1400" height="1000" fill="url(#bg)" />
-  <rect x="45" y="45" width="1310" height="910" fill="none" stroke="#16385f" stroke-width="4" />
-  <rect x="70" y="70" width="1260" height="860" fill="none" stroke="#7f95b6" stroke-width="2" />
-  <text x="700" y="180" text-anchor="middle" font-size="28" fill="#2b4365" font-family="Arial">Copilot Coach LMS</text>
-  <text x="700" y="260" text-anchor="middle" font-size="54" fill="#122840" font-weight="700" font-family="Arial">Certificate of Completion</text>
-  <text x="700" y="355" text-anchor="middle" font-size="28" fill="#2f4f77" font-family="Arial">This certifies that</text>
-  <text x="700" y="440" text-anchor="middle" font-size="64" fill="#0b2746" font-weight="700" font-family="Arial">${escapeXml(associateName)}</text>
-  <line x1="340" y1="460" x2="1060" y2="460" stroke="#7f95b6" stroke-width="2" />
-  <text x="700" y="545" text-anchor="middle" font-size="29" fill="#2f4f77" font-family="Arial">has successfully completed the role-based journey</text>
-  <text x="700" y="610" text-anchor="middle" font-size="40" fill="#16385f" font-weight="700" font-family="Arial">${escapeXml(roleLabel)}</text>
-  <text x="700" y="665" text-anchor="middle" font-size="24" fill="#2f4f77" font-family="Arial">Microsoft Copilot Associate Enablement Program</text>
-  <text x="220" y="810" font-size="22" fill="#233f5f" font-family="Arial">Issued: ${escapeXml(issuedLabel)}</text>
-  <text x="220" y="860" font-size="22" fill="#233f5f" font-family="Arial">Certificate ID: ${escapeXml(certId)}</text>
-  <text x="1025" y="810" text-anchor="middle" font-size="22" fill="#233f5f" font-family="Arial">Training &amp; Enablement</text>
-  <line x1="900" y1="825" x2="1150" y2="825" stroke="#6b87ad" stroke-width="2" />
-  <text x="1025" y="860" text-anchor="middle" font-size="18" fill="#46638a" font-family="Arial">Copilot Coach Program Lead</text>
-</svg>`;
-
-  const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  const fileName = `copilot-certificate-${slugify(associateName)}-${stats.journey.id}.svg`;
-
-  link.href = url;
-  link.download = fileName;
-  link.click();
-
-  URL.revokeObjectURL(url);
+  elements.metricCompletion.textContent = `${progress}%`;
+  elements.metricDecision.textContent = `${decision}%`;
+  elements.metricBehavior.textContent = `${behavior}%`;
+  elements.metricRisk.textContent = risk;
 }
 
 function render() {
-  renderHeader();
-  renderRoleButtons();
-  renderJobAids();
-  renderModules();
-  updateStats();
-  renderManagerDashboard();
+  recalculateSupplies();
+  renderPassport();
+  renderSupplies();
+  renderProgress();
+  renderTrailStops();
+  renderMetrics();
+  saveState();
 }
 
-elements.closeDialog.addEventListener("click", () => {
-  elements.moduleDialog.close();
-});
+function openStop(stop) {
+  activeStopId = stop.id;
+  const existingChoiceIndex = selectedChoice(stop.id);
+  const existingChoice = stop.options[existingChoiceIndex];
 
-elements.saveProfile.addEventListener("click", () => {
-  appState.associateName = elements.associateName.value.trim();
-  saveState();
-  syncCurrentLearnerRecord();
+  elements.dialogKicker.textContent = stop.badge;
+  elements.dialogTitle.textContent = stop.title;
+  elements.dialogSummary.textContent = stop.summary;
+  elements.dialogScenario.textContent = stop.scenario;
+  elements.choiceFeedback.textContent = existingChoice
+    ? existingChoice.feedback
+    : "Pick the route that best reinforces the standard process.";
+  elements.choiceFeedback.className = `choice-feedback ${
+    existingChoice ? (existingChoice.correct ? "good" : "bad") : ""
+  }`;
+
+  elements.dialogLessons.innerHTML = "";
+  stop.lessons.forEach((lesson) => {
+    const item = document.createElement("li");
+    item.textContent = lesson;
+    elements.dialogLessons.appendChild(item);
+  });
+
+  elements.dialogOptions.innerHTML = "";
+  stop.options.forEach((option, optionIndex) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = option.label;
+
+    if (existingChoiceIndex === optionIndex) {
+      button.classList.add("selected", option.correct ? "good" : "bad");
+    }
+
+    button.addEventListener("click", () => chooseRoute(stop, optionIndex));
+    elements.dialogOptions.appendChild(button);
+  });
+
+  elements.stopDialog.showModal();
+}
+
+function chooseRoute(stop, optionIndex) {
+  const option = stop.options[optionIndex];
+  state.choices[stop.id] = optionIndex;
+  elements.choiceFeedback.textContent = option.feedback;
+  elements.choiceFeedback.className = `choice-feedback ${option.correct ? "good" : "bad"}`;
+
+  [...elements.dialogOptions.children].forEach((button, index) => {
+    button.className = index === optionIndex
+      ? `selected ${option.correct ? "good" : "bad"}`
+      : "";
+  });
+
+  render();
+}
+
+function completeStop(stopId) {
+  if (!state.completedStops.includes(stopId)) {
+    state.completedStops.push(stopId);
+  }
+
+  render();
+}
+
+elements.savePassport.addEventListener("click", () => {
+  state.travelerName = elements.travelerName.value.trim();
+  state.role = elements.travelerRole.value;
   render();
 });
 
-elements.downloadCertificate.addEventListener("click", downloadCertificate);
-
-elements.managerFilter.addEventListener("change", (event) => {
-  managerViewState.filter = event.target.value;
-  renderManagerDashboard();
+elements.travelerRole.addEventListener("change", () => {
+  state.role = elements.travelerRole.value;
+  render();
 });
 
-elements.managerSort.addEventListener("change", (event) => {
-  managerViewState.sort = event.target.value;
-  renderManagerDashboard();
+elements.closeDialog.addEventListener("click", () => {
+  elements.stopDialog.close();
+  activeStopId = null;
+});
+
+elements.stopDialog.addEventListener("close", () => {
+  activeStopId = null;
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && document.activeElement === elements.travelerName) {
+    state.travelerName = elements.travelerName.value.trim();
+    render();
+  }
 });
 
 render();
