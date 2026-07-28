@@ -14,7 +14,7 @@ export function QuickInfoBar() {
   return (
     <section
       aria-label="Quick info"
-      className="sticky top-16 z-40 border-y border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70"
+      className="sticky top-16 z-40 border-y border-border bg-background/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/75"
     >
       <motion.div
         initial={reduce ? undefined : { opacity: 0, y: 8 }}
