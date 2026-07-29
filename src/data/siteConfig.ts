@@ -22,7 +22,7 @@ export type DayHours =
 export type MenuItem = {
   name: string;
   description: string;
-  price: number;
+  price: number | null;
   dietaryTags: DietaryTag[];
   isSignature: boolean;
 };
@@ -61,10 +61,10 @@ export const siteConfig = {
     } satisfies Record<Weekday, DayHours>
   },
   ordering: {
-    primaryProvider: "Toast",
-    primaryUrl: "https://order.example.com",
+    primaryProvider: "Square",
+    primaryUrl: "https://www.cakeshopcafe.com/s/order",
     secondaryProvider: "Square",
-    secondaryUrl: "https://squareup.example.com"
+    secondaryUrl: "https://www.cakeshopcafe.com/"
   },
   maps: {
     embedUrl:
@@ -89,27 +89,162 @@ export const siteConfig = {
       {
         id: "espresso",
         label: "Coffee",
-        description: "Classic espresso drinks with a new specialty program.",
+        description: "Hot drinks and espresso classics.",
         items: [
           {
-            name: "House Espresso",
-            description: "Chocolatey, balanced, and dialed daily.",
-            price: 3.5,
-            dietaryTags: ["VG"],
+            name: "Drip Coffee",
+            description: "16 oz $3.00 • 24 oz $3.29",
+            price: 3.0,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Cafe au Lait",
+            description: "16 oz $2.85 • 24 oz $3.15",
+            price: 2.85,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Red Eye",
+            description: "16 oz $3.29 • 24 oz $3.79",
+            price: 3.29,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Espresso",
+            description: "4 oz double",
+            price: 4.65,
+            dietaryTags: [],
             isSignature: true
           },
           {
+            name: "Macchiato",
+            description: "2 oz espresso & foam",
+            price: 3.29,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Americano",
+            description: "8 oz",
+            price: 4.65,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Cortado",
+            description: "4 oz",
+            price: 3.29,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
             name: "Cappuccino",
-            description: "Velvety microfoam with a bright finish.",
-            price: 5.25,
-            dietaryTags: ["VG"],
+            description: "8 oz",
+            price: 3.69,
+            dietaryTags: [],
             isSignature: true
           },
           {
             name: "Latte",
-            description: "Smooth espresso with steamed milk.",
-            price: 5.75,
-            dietaryTags: ["VG"],
+            description: "16 oz $4.29 • 24 oz $4.79",
+            price: 4.29,
+            dietaryTags: [],
+            isSignature: true
+          },
+          {
+            name: "Cafe Vanilla",
+            description: "16 oz $4.39 • 24 oz $4.89",
+            price: 4.39,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Cafe Mocha",
+            description: "16 oz $4.39 • 24 oz $4.89",
+            price: 4.39,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Sweet Matcha",
+            description: "$4.89",
+            price: 4.89,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Hot Tea",
+            description:
+              "12 oz or 16 oz $3.25 • English Breakfast, Earl Grey, Blueberry Hibiscus, Turmeric Ginger, Chamomile, Jasmine, Matcha Super Green, Matcha Chai",
+            price: 3.25,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Hot Cocoa",
+            description: "16 oz $3.00 • 24 oz $3.50",
+            price: 3.0,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Local Steamer",
+            description:
+              "Pearson's Elmhurst Dairy Farm steamed with flavor of choice • 16 oz $2.25 • 24 oz $2.50",
+            price: 2.25,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Seven Layer Bar Latte",
+            description: "Hot 12/16 oz • Iced 16/24 oz (price not listed online)",
+            price: null,
+            dietaryTags: [],
+            isSignature: true
+          },
+          {
+            name: "Chocolate Raspberry Latte",
+            description: "Hot 12/16 oz • Iced 16/24 oz (price not listed online)",
+            price: null,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Almond Joy Latte",
+            description: "Hot 12/16 oz • Iced 16/24 oz (price not listed online)",
+            price: null,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Maple Pancake Latte",
+            description: "Hot 12/16 oz • Iced 16/24 oz (price not listed online)",
+            price: null,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Espresso Shot (add-on)",
+            description: "Add a shot",
+            price: 2.5,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Whipped Cream (add-on)",
+            description: "Add whipped cream",
+            price: 0.75,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Cold Foam (add-on)",
+            description: "Flavor of choice",
+            price: 0.75,
+            dietaryTags: [],
             isSignature: false
           }
         ]
@@ -117,55 +252,223 @@ export const siteConfig = {
       {
         id: "cold_drinks",
         label: "Cold Brew",
-        description: "Iced favorites and seasonal cold brew.",
+        description: "Iced drinks, iced tea, and smoothies.",
         items: [
           {
             name: "Cold Brew",
-            description: "Slow-steeped, naturally sweet, low acidity.",
-            price: 5.5,
-            dietaryTags: ["VG"],
+            description: "16 oz $3.75 • 24 oz $4.10 • 32 oz $4.50",
+            price: 3.75,
+            dietaryTags: [],
             isSignature: true
           },
           {
-            name: "Iced Latte",
-            description: "Bright espresso over ice with milk.",
-            price: 6.0,
-            dietaryTags: ["VG"],
+            name: "Iced Coffee",
+            description: "16 oz $3.75 • 24 oz $4.10 • 32 oz $4.50",
+            price: 3.75,
+            dietaryTags: [],
             isSignature: false
           },
           {
-            name: "Sparkling Citrus Espresso",
-            description: "Espresso tonic with a citrus twist.",
-            price: 6.25,
-            dietaryTags: ["VG", "GF"],
+            name: "Thai Iced Coffee",
+            description: "Contains dairy • 16 oz $4.29 • 24 oz $4.79 • 32 oz $5.09",
+            price: 4.29,
+            dietaryTags: [],
             isSignature: true
+          },
+          {
+            name: "Red Eye (iced)",
+            description:
+              "Choice of cold brew or iced coffee • 16 oz $3.79 • 24 oz $4.29 • 32 oz $4.79",
+            price: 3.79,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Americano (iced)",
+            description: "$4.65",
+            price: 4.65,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Latte (iced)",
+            description: "16 oz $4.79 • 24 oz $4.99",
+            price: 4.79,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Cafe Vanilla (iced)",
+            description: "16 oz $4.89 • 24 oz $5.19",
+            price: 4.89,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Cafe Mocha (iced)",
+            description: "16 oz $4.89 • 24 oz $5.19",
+            price: 4.89,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Chai Latte (iced)",
+            description: "16 oz $4.89 • 24 oz $5.19",
+            price: 4.89,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Sweet Matcha (iced)",
+            description: "16 oz $5.09 • 24 oz $5.49",
+            price: 5.09,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Iced Tea",
+            description:
+              "16/24/32 oz $3.59/$3.79/$3.99 • Wild Berry, Green Citrus, Peach Black, Classic Black",
+            price: 3.59,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Chocolate Milk",
+            description: "16 oz $3.00 • 24 oz $3.75",
+            price: 3.0,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Vanilla Milk",
+            description: "16 oz $3.00 • 24 oz $3.75",
+            price: 3.0,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Smoothie: Strawberry Banana",
+            description: "24 oz $8.75 • frozen strawberries, banana, milk & honey",
+            price: 8.75,
+            dietaryTags: [],
+            isSignature: true
+          },
+          {
+            name: "Smoothie: BBC (Blueberry Banana Chai)",
+            description:
+              "24 oz $8.75 • banana, blueberries, raspberries, chia seeds, honey, skim milk",
+            price: 8.75,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Smoothie: Peanut Butter Power",
+            description: "24 oz $8.75 • banana, peanut butter, homemade chocolate syrup",
+            price: 8.75,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Smoothie: Banana Chai",
+            description: "24 oz $8.75 • banana, chai concentrate, milk",
+            price: 8.75,
+            dietaryTags: [],
+            isSignature: false
           }
         ]
       },
       {
         id: "warm_food",
         label: "Warm Food",
-        description: "Toasty, comforting staples made for busy mornings.",
+        description:
+          "Breakfast + sandwiches on house-made bread. Gluten-free white bread available. Add house-made garlic aioli +$0.75.",
         items: [
           {
-            name: "Bacon & Egg Sandwich",
-            description: "Soft roll, folded egg, cheddar, herb aioli.",
+            name: "Breakfast Sandwich: Bacon & Cheddar",
+            description: "Fluffy baked egg topped with bacon and cheddar cheese.",
             price: 9.5,
             dietaryTags: [],
             isSignature: true
           },
           {
-            name: "Veggie Breakfast Wrap",
-            description: "Egg, roasted peppers, spinach, salsa verde.",
-            price: 9.25,
-            dietaryTags: ["VG"],
+            name: "Breakfast Sandwich: Bacon & Pesto",
+            description: "Bacon, sliced tomato, melted mozzarella, creamy pesto sauce.",
+            price: 9.5,
+            dietaryTags: [],
+            isSignature: true
+          },
+          {
+            name: "Breakfast Sandwich: Hawaiian Ham",
+            description: "Sliced ham, roasted pineapple, swiss cheese, garlic aioli.",
+            price: 9.5,
+            dietaryTags: [],
             isSignature: false
           },
           {
-            name: "Gluten-Free Oat Bowl",
-            description: "Warm oats, maple, berries, toasted seeds.",
-            price: 8.0,
-            dietaryTags: ["GF", "VG"],
+            name: "Breakfast Sandwich: Egg White + Almond Milk (Spinach & Feta)",
+            description:
+              "Price varies by bread: pretzel $7.25 • english muffin $6.75 • bagel $6.95 • croissant $8.95",
+            price: null,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Breakfast Sandwich: Egg White Delight (Ham & Swiss)",
+            description:
+              "Price varies by bread: pretzel $7.25 • english muffin $6.75 • bagel $6.95 • croissant $8.95",
+            price: null,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Hot Sandwich: Turkey",
+            description: "Mozzarella, sautéed spinach, sliced tomato, chipotle sauce.",
+            price: 9.5,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Hot Sandwich: BLT",
+            description: "Bacon, fresh mozzarella, tomato, balsamic glaze.",
+            price: 9.5,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Hot Sandwich: French Onion",
+            description: "Caramelized onions, swiss, mozzarella, garlic & herb butter.",
+            price: 9.5,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Hot Sandwich: Toasted Veggie",
+            description:
+              "Caramelized onions, sautéed spinach, roasted red bell peppers, sliced tomato. Add cheese +$1.",
+            price: 9.5,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Hot Sandwich: Grilled Cheese",
+            description: "Made with mild cheddar cheese.",
+            price: 6.49,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Cold Sandwich: Dill Chicken Salad",
+            description: "Choice of bread (varies).",
+            price: 9.5,
+            dietaryTags: [],
+            isSignature: false
+          },
+          {
+            name: "Cold Sandwich: Cranberry Almond Chicken Salad",
+            description: "Choice of bread (varies). Add avocado or bacon +$2.",
+            price: 9.5,
+            dietaryTags: [],
             isSignature: false
           }
         ]
@@ -173,28 +476,14 @@ export const siteConfig = {
       {
         id: "bakery",
         label: "Pastries",
-        description: "Fresh-baked daily (limited quantity).",
+        description: "Not listed on the online menu (bakery case rotates daily).",
         items: [
           {
-            name: "Almond Croissant",
-            description: "Buttery layers, toasted almonds, light glaze.",
-            price: 5.25,
-            dietaryTags: ["V"],
-            isSignature: true
-          },
-          {
-            name: "Blueberry Muffin",
-            description: "Bursting berries with a crisp top.",
-            price: 4.75,
-            dietaryTags: ["V"],
+            name: "Bakery Case (daily)",
+            description: "Ask in store for today's selection.",
+            price: null,
+            dietaryTags: [],
             isSignature: false
-          },
-          {
-            name: "Gluten-Free Brownie",
-            description: "Fudgy, rich cocoa with flaky sea salt.",
-            price: 4.95,
-            dietaryTags: ["GF", "V"],
-            isSignature: true
           }
         ]
       }

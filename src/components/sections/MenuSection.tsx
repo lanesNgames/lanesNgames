@@ -10,6 +10,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 
+function formatPrice(price: number | null) {
+  if (price === null) return "Call for price";
+  return `$${price.toFixed(2)}`;
+}
+
 function tagLabel(tag: DietaryTag) {
   switch (tag) {
     case "GF":
@@ -76,7 +81,7 @@ function CategoryPanel({
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between gap-3">
                     <span>{item.name}</span>
-                    <span className="text-sm font-semibold">${item.price.toFixed(2)}</span>
+                    <span className="text-sm font-semibold">{formatPrice(item.price)}</span>
                   </CardTitle>
                   <CardDescription>{item.description}</CardDescription>
                 </CardHeader>
@@ -108,7 +113,7 @@ function CategoryPanel({
               <CardHeader>
                 <CardTitle className="flex items-center justify-between gap-3">
                   <span>{item.name}</span>
-                  <span className="text-sm font-semibold">${item.price.toFixed(2)}</span>
+                  <span className="text-sm font-semibold">{formatPrice(item.price)}</span>
                 </CardTitle>
                 <CardDescription>{item.description}</CardDescription>
               </CardHeader>
