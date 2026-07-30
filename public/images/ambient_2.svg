@@ -1,0 +1,14 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Barista pulling espresso">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#ecfeff" />
+      <stop offset="1" stop-color="#fed7aa" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g2)" />
+  <rect x="250" y="240" width="700" height="330" rx="32" fill="#111827" opacity="0.10" />
+  <rect x="310" y="290" width="280" height="120" rx="20" fill="#111827" opacity="0.12" />
+  <rect x="640" y="290" width="250" height="220" rx="20" fill="#111827" opacity="0.12" />
+  <path d="M560 420 C560 520, 650 540, 650 630" stroke="#fb923c" stroke-width="18" fill="none" opacity="0.45" />
+</svg>
+

@@ -1,0 +1,50 @@
+You are working on a **Cafe Rebrand** marketing website.
+Primary goal: a fast, accessible, mobile-first (390px) site with clean architecture and editable site data.
+
+## Core Tech Stack (enforced)
+- Framework: Next.js (App Router)
+- Styling: Tailwind CSS
+- Icons: lucide-react
+- UI Components: shadcn/ui (Radix Primitives)
+- Animation: Framer Motion (keep motion subtle; respect reduced-motion)
+- SEO: next-seo + Schema.org JSON-LD
+
+## Coding Principles (must follow)
+- Mobile-first always: design and validate at 390px before scaling up.
+- Speed & accessibility:
+  - No dense background video loads on mobile.
+  - Use static image fallbacks for any hero/ambient media.
+  - Ensure a minimum 44px tap target for all buttons/links.
+  - Use `next/image` for images and `next/link` for navigation.
+- Accessible semantics:
+  - Use semantic HTML: `header`, `nav`, `main`, `section`, `footer`.
+  - Add explicit ARIA labels where needed (especially nav landmarks and icon-only controls).
+  - Avoid div-soup; headings must be hierarchical.
+- Clean code structure:
+  - Reusable UI primitives in `src/components/ui/`
+  - Page-level sections in `src/components/sections/`
+  - Dynamic site data in `src/data/siteConfig.ts` (menu, hours, location, socials, etc.)
+  - Prefer server components by default; use client components only when needed.
+
+## Component Architecture Constraints (hard rules)
+- Menus:
+  - NEVER use raw text PDF downloads for menus.
+  - Menu items MUST be clean text rendered from JSON data.
+  - Display dietary badges with Tailwind-styled pills: `GF`, `VG`, `V`.
+- Sticky navigation:
+  - Header must remain fixed on scroll with a high z-index and subtle background blur.
+  - Keep nav interactions touch-friendly (44px+) and keyboard accessible.
+- Local schema:
+  - Inject `Restaurant` Schema.org JSON-LD into the `<head>` of the root layout (`app/layout.tsx`).
+  - Keep schema values sourced from `src/data/siteConfig.ts` so updates are single-source-of-truth.
+
+## Implementation notes (preferred patterns)
+- Tailwind:
+  - Prefer utility classes + small `cn()` composition; avoid large bespoke CSS files.
+  - Keep contrast high; meet WCAG AA for text.
+- Motion:
+  - Use `prefers-reduced-motion` safeguards (`useReducedMotion()` or CSS).
+  - Avoid expensive scroll-tied animations on low-end mobile.
+- SEO:
+  - Use Next SEO for defaults and per-page overrides.
+  - Include canonical, OpenGraph, and JSON-LD where appropriate.

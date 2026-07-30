@@ -1,0 +1,14 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cozy corner seating">
+  <defs>
+    <linearGradient id="g4" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fefce8" />
+      <stop offset="1" stop-color="#e0f2fe" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g4)" />
+  <circle cx="820" cy="250" r="150" fill="#fb923c" opacity="0.25" />
+  <rect x="260" y="350" width="520" height="260" rx="30" fill="#111827" opacity="0.10" />
+  <rect x="310" y="410" width="200" height="140" rx="22" fill="#111827" opacity="0.10" />
+  <rect x="550" y="410" width="200" height="140" rx="22" fill="#111827" opacity="0.10" />
+</svg>
+
